@@ -9,6 +9,7 @@ export default {};
 <style lang="scss" scoped>
 .footer-wrap {
   height: 100px;
-  background-color: yellow;
+  text-align: center;
+  // background-color: yellow;
 }
 </style>
