@@ -1,12 +1,12 @@
 <template>
   <div class="home-wrap">
-    <Swiper />
+    <!-- <Swiper /> -->
     <Article />
   </div>
 </template>
 <script>
 import { mapActions } from "vuex";
-import Swiper from "@/components/swiper/swiper.vue";
+// import Swiper from "@/components/swiper/swiper.vue";
 import Article from "@/components/article-list/article-list.vue";
 export default {
   name: "home",
@@ -16,7 +16,7 @@ export default {
     };
   },
   components: {
-    Swiper,
+    // Swiper,
     Article
   },
   created() {
@@ -30,6 +30,6 @@ export default {
 <style lang="scss" scoped>
 .home-wrap {
   // height: 100%;
-  background-color: blue;
+  // background-color: blue;
 }
 </style>

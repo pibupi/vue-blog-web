@@ -22,12 +22,15 @@ export default {};
 <style lang="scss" scoped>
 .header-wrap {
   height: 80px;
-  background-color: aqua;
+  // background-color: aqua;
   display: flex;
+  // width: 100%;
   justify-content: space-between;
-  padding: 50px 100px 0 100px;
-  @media (max-width: 930px) {
-    display: none;
+  padding: 50px 10% 0 10%;
+  .nav-right {
+    @media (max-width: 930px) {
+      display: none;
+    }
   }
   .nav-right-ul {
     li {

@@ -2,7 +2,7 @@
   <div class="single-article-wrap">
     <div class="single-article-container">
       <h1 class="single-article-title">{{ singleArticle.title }}</h1>
-      <div v-html="singleArticle.content" id="edit"></div>
+      <div v-html="singleArticle.content" id="edit" v-highlight></div>
     </div>
   </div>
 </template>
@@ -25,6 +25,15 @@ export default {
     console.log(this.$route.query.id);
     this.getsingarticle(this.$route.query.id);
   },
+  mounted() {
+    // var allpre = document.getElementsByTagName("pre");
+    // for (let i = 0; i < allpre.length; i++) {
+    //   var onepre = document.getElementsByTagName("pre")[i];
+    //   onepre.setAttribute("v-highlight-a");
+    //   var mycode = document.getElementsByTagName("pre")[i].innerHTML;
+    //   onepre.innerHTML = '<code id="mycode">' + mycode + "</code>";
+    // }
+  },
   methods: {
     ...mapActions(["getsingarticle"])
   }
@@ -35,7 +44,6 @@ export default {
   height: 100%;
   margin-bottom: 60px;
   padding-top: 30px;
-  // background-color: tomato;
   .single-article-container {
     height: 100%;
     width: 70%;
@@ -49,7 +57,6 @@ export default {
       margin-bottom: 20px;
       line-height: 24px;
       color: #666;
-      // text-indent: 2em;
     }
     #edit /deep/ p > span {
       display: inline-block;
@@ -59,9 +66,9 @@ export default {
     #edit /deep/ img {
       display: flex;
       justify-content: center;
-      // text-align: center;
       margin: 0 auto;
       max-width: 100%;
+      margin-bottom: 30px;
       cursor: zoom-in;
     }
   }
