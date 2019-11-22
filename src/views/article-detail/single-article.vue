@@ -23,8 +23,9 @@ export default {
   },
   created() {
     console.log(this.$route.query.id);
-    this.getsingarticle(this.$route.query.id);
+    this.getSingleArticleAction(this.$route.query.id);
   },
+  // 富文本的处理展示
   mounted() {
     // var allpre = document.getElementsByTagName("pre");
     // for (let i = 0; i < allpre.length; i++) {
@@ -35,7 +36,7 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["getsingarticle"])
+    ...mapActions(["getSingleArticleAction"])
   }
 };
 </script>

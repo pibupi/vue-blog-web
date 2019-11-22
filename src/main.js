@@ -1,25 +1,17 @@
 import Vue from "vue";
+import { Button, Input, Card, pagination } from "element-ui";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import "@/assets/scss/index.scss";
-import Highlight from "./lib/highlight";
-//monokai-sublime.css可以改样式，比如背景透明可以是lightfair.css
-// import "highlight.js/styles/atelier-heath-light.css";
-// import "highlight.js/styles/atelier-lakeside-light.css";
-import "highlight.js/styles/github.css";
-Vue.use(Highlight);
-// Vue.directive("highlight", {
-//   componentUpdated: function(el) {
-//     let blocks = el.querySelectorAll("code");
-//     console.log(blocks);
-//     for (let i = 0; i < blocks.length; i++) {
-//       const item = blocks[i];
-//       Hljs.highlightBlock(item);
-//     }
-//   }
-// });
+import animated from "animate.css";
+
+Vue.use(animated);
+Vue.use(Input)
+  .use(Button)
+  .use(pagination)
+  .use(Card);
+
 Vue.config.productionTip = false;
 
 new Vue({
