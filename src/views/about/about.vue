@@ -1,6 +1,6 @@
 <template>
   <div class="about-wrap">
-    about
+    关于
   </div>
 </template>
 <script>
