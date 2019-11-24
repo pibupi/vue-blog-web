@@ -23,12 +23,15 @@ class HttpRequest {
   interceptors(instance, url) {
     instance.interceptors.request.use(
       config => {
+        const token = localStorage.getItem("token");
         // 添加全局的loading...
         if (!Object.keys(this.queue).length) {
           // Spin.show()
         }
         this.queue[url] = true;
-        // config.headers["Authorization"] = getToken();
+        if (token) {
+          config.headers.common["Authorization"] = "Bearer " + token;
+        }
         return config;
       },
       error => {

@@ -23,3 +23,10 @@ export const getCategoryArticle = category_id => {
     method: "get"
   });
 };
+export const clickLikeArticle = data => {
+  return axios.request({
+    url: `/api/v1/web/click/like`,
+    data,
+    method: "post"
+  });
+};

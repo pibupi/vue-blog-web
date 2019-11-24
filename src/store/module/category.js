@@ -9,7 +9,7 @@ const mutations = {
   }
 };
 const actions = {
-  async getCategory({ commit }) {
+  async getCategoryAction({ commit }) {
     try {
       const { code, data } = await getCategory();
       if (code === 0) {

@@ -22,7 +22,6 @@ export default {
     })
   },
   created() {
-    console.log(this.$route.query.id);
     this.getSingleArticleAction(this.$route.query.id);
   },
   // 富文本的处理展示

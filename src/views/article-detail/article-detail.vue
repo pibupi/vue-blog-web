@@ -4,8 +4,15 @@
       <h1 style="text-align:center;">{{ article.title }}</h1>
     </div>
     <div class="content">
-      <div className="detailed-content" id="mark" v-html="code"></div>
+      <div>
+        <div className="detailed-content" id="mark" v-html="code"></div>
+        <div class="pick" @click="likeClick">
+          <span :class="likeClass">♥</span>
+          <span class="count">{{ count }}</span>
+        </div>
+      </div>
     </div>
+    <Comments @send="send" :comments="comments" />
   </div>
 </template>
 <script>
@@ -13,8 +20,14 @@ import marked from "marked";
 import hljs from "highlight.js";
 import axios from "../../service/index";
 import xss from "xss";
+import jwtToken from "jwt-decode";
+import { mapActions } from "vuex";
+import Comments from "@/components/comments/comments";
 // import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/monokai-sublime.css";
+import { Message } from "element-ui";
+import { mapState } from "vuex";
+import { clickLikeArticle } from "../../service/article";
 function translateMarkdown(plainText, isGuardXss = false) {
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: new marked.Renderer(),
@@ -35,19 +48,18 @@ export default {
     return {
       // code: "# 标题\n```javascript\nfunction(){\n\tconsole.log(123)\n}\n```", 测试markdown数据
       code: "",
-      article: {}
+      article: {},
+      count: 0,
+      like_status: 0,
+      likeClass: "xin",
+      comments: []
     };
   },
+  components: {
+    Comments
+  },
   created() {
-    axios
-      .request({
-        url: `/api/v1/web/article/${this.$route.query.id}`,
-        method: "get"
-      })
-      .then(res => {
-        this.article = res.data;
-        this.code = translateMarkdown(res.data.content);
-      });
+    this.getArticleDetail();
   },
   mounted() {
     marked.setOptions({
@@ -65,13 +77,116 @@ export default {
       xhtml: false
     });
     this.code = marked(this.code);
+  },
+  computed: {
+    ...mapState({
+      isLogin: state => state.login.isLogin
+    })
+  },
+  methods: {
+    ...mapActions(["sendCommentAction", "getCommentAction"]),
+    async send(params) {
+      if (params.content) {
+        await this.sendCommentAction(params);
+        this.comments.unshift(params);
+      } else {
+        Message.warning({
+          message: "评论内容不能为空"
+        });
+      }
+    },
+    likeClick() {
+      if (!this.isLogin) {
+        Message.warning({
+          message: "登陆后即可点赞"
+        });
+        return;
+      }
+      const decoded = jwtToken(sessionStorage.getItem("token"));
+      let params = {
+        article_id: this.$route.query.id,
+        user_id: decoded.id
+      };
+      clickLikeArticle(params).then(res => {
+        if (res.code === 0) {
+          this.likeClass = "xin click";
+          this.count += 1;
+          Message.warning({
+            message: res.msg
+          });
+        } else if (res.code === 1) {
+          Message.warning({
+            message: res.msg
+          });
+          return;
+        }
+      });
+    },
+    async getArticleDetail() {
+      let decoded = null;
+      if (sessionStorage.getItem("token")) {
+        decoded = await jwtToken(sessionStorage.getItem("token"));
+      }
+      axios
+        .request({
+          url: `/api/v1/web/article`,
+          params: {
+            article_id: this.$route.query.id,
+            user_id: decoded ? decoded.id : ""
+          },
+          method: "get"
+        })
+        .then(res => {
+          this.article = res.data.article;
+          this.count = this.article.like_count;
+          this.like_status = this.article.like_status;
+          if (this.like_status > 0) {
+            this.likeClass = "xin click";
+          }
+          res.data.comments.forEach(item => {
+            this.$set(item, "toggleAnswer", false);
+            this.$set(item, "children", []);
+            res.data.answerComments.forEach(child => {
+              if (item.id == child.parent_id) {
+                this.$set(child, "toggleAnswer", false);
+                item.children.push(child);
+              }
+            });
+          });
+          this.comments = res.data.comments;
+          this.code = translateMarkdown(res.data.article.content);
+        });
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+.xin {
+  float: right;
+  margin-right: 30px;
+  font-size: 36px;
+  font-weight: bolder;
+}
+.pick {
+  position: relative;
+  left: 95%;
+  overflow: hidden;
+  display: inline-block;
+}
+.click {
+  color: red;
+}
+.count {
+  position: absolute;
+  right: 16px;
+  font-size: 12px;
+  font-weight: bolder;
+  bottom: 6px;
+}
 .content {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
+  overflow: hidden;
 }
 .bread-div {
   padding: 0.5rem;
@@ -124,7 +239,7 @@ export default {
   background-color: #f3f3f3;
   border: 1px solid #fdb9cc;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 14px;
   padding-left: 5px;
   padding-right: 5px;
   color: #4f4f4f;

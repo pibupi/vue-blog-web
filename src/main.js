@@ -1,5 +1,13 @@
 import Vue from "vue";
-import { Button, Input, Card, pagination } from "element-ui";
+import {
+  Button,
+  Input,
+  Card,
+  pagination,
+  Dialog,
+  Form,
+  FormItem
+} from "element-ui";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
@@ -10,8 +18,10 @@ Vue.use(animated);
 Vue.use(Input)
   .use(Button)
   .use(pagination)
+  .use(Dialog)
+  .use(Form)
+  .use(FormItem)
   .use(Card);
-
 Vue.config.productionTip = false;
 
 new Vue({

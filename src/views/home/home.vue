@@ -17,7 +17,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 // import Swiper from "@/components/swiper/swiper.vue";
-import Article from "@/components/article-list/article-list.vue";
+import Article from "@/components/articles/articles.vue";
 export default {
   name: "home",
   components: {
