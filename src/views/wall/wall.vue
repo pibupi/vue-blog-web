@@ -1,9 +1,15 @@
 <template>
   <div class="wall">
-    留言墙
+    <Comment />
   </div>
 </template>
 <script>
-export default {};
+import Comment from "@/components/comments/comments";
+export default {
+  name: "wall",
+  components: {
+    Comment
+  }
+};
 </script>
 <style lang="scss" scoped></style>

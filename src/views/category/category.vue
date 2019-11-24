@@ -19,7 +19,7 @@
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
-import Article from "@/components/article-list/article-list";
+import Article from "@/components/articles/articles";
 export default {
   name: "category",
   data() {
@@ -29,7 +29,7 @@ export default {
     Article
   },
   created() {
-    this.getCategory();
+    this.getCategoryAction();
     this.clearArticleListAction();
   },
   computed: {
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      "getCategory",
+      "getCategoryAction",
       "getCategoryArticleAction",
       "clearArticleListAction"
     ]),
@@ -52,7 +52,7 @@ export default {
 <style lang="scss" scoped>
 .tags-wrap {
   margin: 30px auto;
-  height: 400px;
+  // height: 400px;
   width: 80%;
   .split-line-wrap {
     display: flex;
@@ -70,7 +70,7 @@ export default {
       display: inline-block;
       height: 0;
       width: 92%;
-      border: 1px solid #dcdfe7;
+      border: 2px solid #dcdfe7;
     }
   }
   .category-wrap {
