@@ -1,6 +1,6 @@
 import axios from "./index";
+// import jwtToken from "jwt-decode";
 export const getArticleList = ({ current, pageSize, keywords }) => {
-  console.log(current, pageSize);
   return axios.request({
     url: "/api/v1/web/article/list",
     params: {
@@ -11,9 +11,13 @@ export const getArticleList = ({ current, pageSize, keywords }) => {
     method: "get"
   });
 };
-export const getSingArticle = id => {
+export const getSingArticle = ({ article_id, user_id }) => {
   return axios.request({
-    url: `/api/v1/web/article/${id}`,
+    url: `/api/v1/web/article`,
+    params: {
+      article_id,
+      user_id
+    },
     method: "get"
   });
 };

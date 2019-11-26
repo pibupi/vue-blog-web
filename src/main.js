@@ -13,6 +13,8 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import animated from "animate.css";
+import "./assets/scss/reset.scss";
+import "./assets/font/iconfont.css";
 
 Vue.use(animated);
 Vue.use(Input)

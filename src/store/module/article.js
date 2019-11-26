@@ -1,12 +1,7 @@
-import {
-  getArticleList,
-  getSingArticle,
-  getCategoryArticle
-} from "@/service/article.js";
+import { getArticleList, getCategoryArticle } from "@/service/article.js";
 
 const state = {
   articleList: [],
-  singleArticle: {},
   pagination: {
     current: 1,
     pageSize: 2,
@@ -19,9 +14,6 @@ const mutations = {
   GET_ARTICLE_LIST(state, payload) {
     state.articleList = payload.articleList;
     state.count = payload.count;
-  },
-  GET_SINGL_ARTICLE(state, payload) {
-    state.singleArticle = payload;
   },
   CHANGE_CURRENT(state, payload) {
     state.pagination.current = payload;
@@ -43,14 +35,6 @@ const actions = {
       if (code === 0) {
         commit("GET_ARTICLE_LIST", { articleList, count });
       }
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  async getSingleArticleAction({ commit }, id) {
-    try {
-      const { data } = await getSingArticle(id);
-      commit("GET_SINGL_ARTICLE", data);
     } catch (err) {
       console.log(err);
     }
