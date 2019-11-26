@@ -22,9 +22,6 @@ import { mapState, mapActions } from "vuex";
 import Article from "@/components/articles/articles";
 export default {
   name: "category",
-  data() {
-    return {};
-  },
   components: {
     Article
   },
@@ -52,7 +49,6 @@ export default {
 <style lang="scss" scoped>
 .tags-wrap {
   margin: 30px auto;
-  // height: 400px;
   width: 80%;
   .split-line-wrap {
     display: flex;

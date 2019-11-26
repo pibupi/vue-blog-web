@@ -36,13 +36,35 @@
               <span style="color:#99a2aa">
                 {{ item.createdAt }}
               </span>
+              <!-- 父评论点赞 -->
+              <span
+                @click="up(item)"
+                style="marginRight:10px;position:relative;marginLeft:10px;"
+              >
+                <span class="count">{{ item.reply_like_count }}</span>
+                <i
+                  :class="
+                    item.reply_like_status
+                      ? 'iconfont icon-dianzan_active-copy'
+                      : 'iconfont icon-dianzan21'
+                  "
+                  class="topzan"
+                ></i>
+              </span>
+              <!-- <span @click="down(item)" style="marginRight:10px;">
+                <i
+                  :class="
+                    item.reply_down_status
+                      ? 'iconfont icon-dianzan11'
+                      : 'iconfont icon-dianzan1'
+                  "
+                ></i>
+              </span> -->
+              <!-- 父评论回复 -->
               <span class="answer" @click="answer(item.id, item.displayName)"
                 >回复</span
               >
             </div>
-            <span class="tool">
-              点赞
-            </span>
           </div>
           <!-- 回复评论 -->
           <ul class="answer-list">
@@ -65,15 +87,37 @@
                       <span>
                         {{ child.createdAt }}
                       </span>
+                      <!-- 子评论点赞 -->
+                      <span
+                        @click="upChild(child)"
+                        style="marginRight:10px;position:relative;marginLeft:10px;"
+                      >
+                        <span class="count">{{ child.reply_like_count }}</span>
+                        <i
+                          :class="
+                            child.reply_like_status
+                              ? 'iconfont  icon-dianzan5'
+                              : 'iconfont icon-dianzan21'
+                          "
+                          class="topzan"
+                        ></i>
+                      </span>
+                      <!-- <span @click="down(child)" style="marginRight:10px;">
+                        <i
+                          :class="
+                            child.reply_down_status
+                              ? 'iconfont icon-dianzan2'
+                              : 'iconfont icon-dianzan1'
+                          "
+                        ></i>
+                      </span> -->
+                      <!-- 子评论回复 -->
                       <span
                         class="answer"
                         @click="answer(child.parent_id, child.displayName)"
                         >回复</span
                       >
                     </div>
-                    <span class="tool">
-                      点赞
-                    </span>
                   </div>
                   <div v-if="child.toggleAnswer" class="answer-input-wrap">
                     <input
@@ -108,14 +152,24 @@
 </template>
 <script>
 import "../../assets/scss/public.scss";
-import jwtDecode from "jwt-decode";
+import jwtToken from "jwt-decode";
+import { Message } from "element-ui";
 import { mapState } from "vuex";
-import { getComments } from "../../service/comment";
+import { getComments, sendAnswerComment } from "../../service/comment";
 import axios from "../../service";
 export default {
   name: "comment",
   props: {
     comments: {
+      type: Array
+    },
+    // replyLikeStatus: {
+    //   type: Array
+    // }
+    replyLikeCommentStatus: {
+      type: Array
+    },
+    replyLikeAnswerStatus: {
       type: Array
     }
   },
@@ -126,18 +180,107 @@ export default {
       answerMsgOk: [],
       parent_id: null,
       answerId: null,
-      answerDiaplayName: ""
+      answerDiaplayName: "",
+      zanStatus: false,
+      buzanStatus: false,
+      zanId: null
     };
   },
   computed: {
     ...mapState({
       isLogin: state => state.login.isLogin,
       displayName: state => state.login.displayName
-      // comments: state => state.comment.comments
     })
   },
   created() {},
   methods: {
+    up(item) {
+      let status = false;
+      this.replyLikeCommentStatus.forEach(result => {
+        if (result.comment_id == item.id) {
+          status = true;
+          return;
+        }
+      });
+      if (status) {
+        Message.warning({
+          message: "您已点过赞！！"
+        });
+        return;
+      }
+      let decoded = null;
+      if (sessionStorage.getItem("token")) {
+        decoded = jwtToken(sessionStorage.getItem("token"));
+      }
+      let params = {
+        user_id: decoded.id,
+        comment_id: item.id,
+        article_id: this.$route.query.id
+      };
+      axios
+        .request({
+          url: "/api/v1/web/click/replylike",
+          data: {
+            params
+          },
+          method: "post"
+        })
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$emit("getArticleDetail");
+            // console.log(item.reply_like_status);
+            // item.reply_like_status = !item.reply_like_status;
+            // console.log(item.reply_like_status);
+          }
+        });
+    },
+    upChild(child) {
+      let statuss = false;
+      if (this.replyLikeAnswerStatus) {
+        this.replyLikeAnswerStatus.forEach(item => {
+          if (item.answer_id == child.id) {
+            statuss = true;
+            return;
+          }
+        });
+        if (statuss) {
+          Message.warning({
+            message: "您已点过赞！！"
+          });
+          return;
+        }
+      }
+      let decoded = null;
+      if (sessionStorage.getItem("token")) {
+        decoded = jwtToken(sessionStorage.getItem("token"));
+      }
+      let params = {
+        user_id: decoded.id,
+        answer_id: child.id, // 子评论要加1
+        article_id: this.$route.query.id
+      };
+      axios
+        .request({
+          url: "/api/v1/web/click/child/replylike",
+          data: {
+            params
+          },
+          method: "post"
+        })
+        .then(async res => {
+          if (res.code == 0) {
+            Message.warning({
+              message: res.msg
+            });
+            await this.$emit("getArticleDetail");
+          } else {
+            Message.warning({
+              message: res.msg
+            });
+          }
+        });
+    },
     async sendComment() {
       if (this.isLogin) {
         let params = {
@@ -155,7 +298,9 @@ export default {
     changeEditContent() {
       this.commentContent = this.$refs.editor.innerHTML;
     },
+    // 弹出回复框
     answer(id, displayName) {
+      console.log(id);
       this.answerId = id;
       this.answerDiaplayName = displayName;
       if (this.displayName === displayName) {
@@ -171,31 +316,46 @@ export default {
       }
       item.toggleAnswer = !item.toggleAnswer;
     },
+    // 发送子回复
     sendAnswer() {
       let data = {
         parent_id: this.parent_id,
         article_id: this.$route.query.id,
         answerContent: this.answerMsg,
-        displayName: this.displayName
+        displayName: this.displayName,
+        createdAt: Date.now()
       };
-      axios
-        .request({
-          url: "/api/v1/web/comment/answer/add",
-          data,
-          method: "post"
-        })
-        .then(res => {
-          if (res.code == 0) {
-            this.answer(this.answerId, this.answerDiaplayName);
-            let item = this.comments.find(item => item.id === this.answerId);
-            item.children.push(data);
-          }
-        });
+      console.log(data);
+      sendAnswerComment(data).then(res => {
+        if (res.code == 0) {
+          this.answer(this.answerId, this.answerDiaplayName);
+          let item = this.comments.find(item => item.id === this.answerId);
+          // item.children.push(data);
+          this.$emit("getArticleDetail");
+        }
+      });
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.topzan {
+  font-size: 20px;
+}
+.count {
+  color: #fff;
+  display: inline-block;
+  position: absolute;
+  top: -15px;
+  right: -6px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #f00;
+}
 .comment-wrap {
   width: 80%;
   margin: 0 auto;
@@ -211,9 +371,6 @@ export default {
       font-weight: bolder;
     }
     .split-line {
-      // position: absolute;
-      // top: 10px;
-      // right: 0;
       margin-left: 50px;
       margin-top: 10px;
       display: inline-block;
@@ -271,49 +428,44 @@ export default {
           color: #99a2aa;
           .left {
             font-size: 13px;
-            // font-weight: bolder;
+            .answer {
+              padding: 3px;
+              border-radius: 2px;
+              cursor: pointer;
+              &:hover {
+                color: #00a1d6;
+                background-color: #e5e9ef;
+              }
+            }
           }
           .tool {
             font-size: 13px;
-            // font-weight: bolder;
+          }
+        }
+        .answer-input-wrap {
+          overflow: hidden;
+          .answerInput {
+            min-height: 20px;
+            width: 98%;
+            float: right;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            outline: none;
+            padding: 20px;
+            transition: all 0.5s;
+            box-sizing: border-box;
+            &:hover {
+              border: 1px solid #1890ff;
+            }
+          }
+          .send-answer-button {
+            margin-top: 20px;
+            float: right;
+            margin-bottom: 20px;
           }
         }
       }
     }
   }
-}
-.answer-content {
-  font-size: 14px;
-}
-.answer {
-  padding: 3px;
-  border-radius: 2px;
-  cursor: pointer;
-  &:hover {
-    color: #00a1d6;
-    background-color: #e5e9ef;
-  }
-}
-.answer-input-wrap {
-  overflow: hidden;
-}
-.answerInput {
-  min-height: 20px;
-  width: 98%;
-  float: right;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  outline: none;
-  padding: 20px;
-  transition: all 0.5s;
-  box-sizing: border-box;
-  &:hover {
-    border: 1px solid #1890ff;
-  }
-}
-.send-answer-button {
-  margin-top: 20px;
-  float: right;
-  margin-bottom: 20px;
 }
 </style>

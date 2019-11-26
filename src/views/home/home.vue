@@ -2,7 +2,7 @@
   <div class="home-wrap">
     <!-- <Swiper /> -->
     <Article />
-    <div class="pagination">
+    <div class="pagination-wrap">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="pagination.current"
@@ -44,7 +44,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.pagination {
+.pagination-wrap {
   width: 0;
   margin: 30px auto;
 }

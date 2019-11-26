@@ -119,6 +119,7 @@ export default {
       Message.success({
         message: "成功退出登录"
       });
+      this.$router.replace({ name: "home" });
     },
     articleSearch() {
       this.getArticleListAction(this.pagination);

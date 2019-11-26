@@ -6,3 +6,10 @@ export const sendComment = data => {
     method: "post"
   });
 };
+export const sendAnswerComment = data => {
+  return axios.request({
+    url: "/api/v1/web/comment/answer/add",
+    data,
+    method: "post"
+  });
+};

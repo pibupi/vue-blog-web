@@ -12,37 +12,27 @@
         </div>
       </div>
     </div>
-    <Comments @send="send" :comments="comments" />
+    <Comments
+      @send="send"
+      :comments="comments"
+      @getArticleDetail="getArticleDetail"
+      :replyLikeCommentStatus="replyLikeCommentStatus"
+      :replyLikeAnswerStatus="replyLikeAnswerStatus"
+    />
   </div>
 </template>
 <script>
 import marked from "marked";
 import hljs from "highlight.js";
-import axios from "../../service/index";
-import xss from "xss";
 import jwtToken from "jwt-decode";
-import { mapActions } from "vuex";
+import axios from "../../service/index";
+import { mapState, mapActions } from "vuex";
 import Comments from "@/components/comments/comments";
 // import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/monokai-sublime.css";
 import { Message } from "element-ui";
-import { mapState } from "vuex";
-import { clickLikeArticle } from "../../service/article";
-function translateMarkdown(plainText, isGuardXss = false) {
-  return marked(isGuardXss ? xss(plainText) : plainText, {
-    renderer: new marked.Renderer(),
-    gfm: true,
-    pedantic: false,
-    sanitize: false,
-    tables: true,
-    breaks: true,
-    smartLists: true,
-    smartypants: true,
-    highlight: function(code) {
-      return hljs.highlightAuto(code).value;
-    }
-  });
-}
+import { clickLikeArticle, getSingArticle } from "../../service/article";
+import { translateMarkdown } from "../../lib/markdown";
 export default {
   data() {
     return {
@@ -52,7 +42,11 @@ export default {
       count: 0,
       like_status: 0,
       likeClass: "xin",
-      comments: []
+      comments: [],
+      replyLikeStatus: [],
+      replyLikeCommentStatus: [],
+      replyLikeAnswerStatus: []
+      // replydownLikeCommentStatus: []
     };
   },
   components: {
@@ -62,21 +56,7 @@ export default {
     this.getArticleDetail();
   },
   mounted() {
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      highlight: function(code) {
-        return hljs.highlightAuto(code).value;
-      },
-      pedantic: false,
-      gfm: true,
-      tables: true,
-      breaks: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false,
-      xhtml: false
-    });
-    this.code = marked(this.code);
+    this.initMarkDown();
   },
   computed: {
     ...mapState({
@@ -85,17 +65,41 @@ export default {
   },
   methods: {
     ...mapActions(["sendCommentAction", "getCommentAction"]),
+    initMarkDown() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        highlight: function(code) {
+          return hljs.highlightAuto(code).value;
+        },
+        pedantic: false,
+        gfm: true,
+        tables: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      });
+      this.code = marked(this.code);
+    },
     async send(params) {
       if (params.content) {
         await this.sendCommentAction(params);
-        this.comments.unshift(params);
+        // console.log(params);
+        // let data = {
+        //   ...params,
+        //   createdAt: Date.now()
+        // };
+        // this.comments.unshift(data);
+        this.getArticleDetail();
+        console.log(this.comments);
       } else {
         Message.warning({
           message: "评论内容不能为空"
         });
       }
     },
-    likeClick() {
+    async likeClick() {
       if (!this.isLogin) {
         Message.warning({
           message: "登陆后即可点赞"
@@ -107,57 +111,148 @@ export default {
         article_id: this.$route.query.id,
         user_id: decoded.id
       };
-      clickLikeArticle(params).then(res => {
-        if (res.code === 0) {
-          this.likeClass = "xin click";
-          this.count += 1;
-          Message.warning({
-            message: res.msg
-          });
-        } else if (res.code === 1) {
-          Message.warning({
-            message: res.msg
-          });
-          return;
-        }
-      });
+      let { code, msg } = await clickLikeArticle(params);
+      if (code === 0) {
+        this.likeClass = "xin click";
+        this.count += 1;
+        Message.warning({
+          message: msg
+        });
+      } else if (code === 1) {
+        Message.warning({
+          message: msg
+        });
+        return;
+      }
     },
     async getArticleDetail() {
       let decoded = null;
       if (sessionStorage.getItem("token")) {
-        decoded = await jwtToken(sessionStorage.getItem("token"));
+        decoded = jwtToken(sessionStorage.getItem("token"));
       }
-      axios
-        .request({
-          url: `/api/v1/web/article`,
-          params: {
-            article_id: this.$route.query.id,
-            user_id: decoded ? decoded.id : ""
-          },
-          method: "get"
-        })
-        .then(res => {
-          this.article = res.data.article;
-          this.count = this.article.like_count;
-          this.like_status = this.article.like_status;
-          if (this.like_status > 0) {
-            this.likeClass = "xin click";
+      let data = {
+        article_id: this.$route.query.id,
+        user_id: decoded ? decoded.id : ""
+      };
+      let {
+        data: {
+          article,
+          comments,
+          answerComments,
+          replyLikeCommentStatus,
+          replyLikeAnswerStatus
+          // replydownLikeCommentStatus
+        }
+      } = await getSingArticle(data);
+      this.article = article;
+      this.replyLikeCommentStatus = replyLikeCommentStatus;
+      this.replyLikeAnswerStatus = replyLikeAnswerStatus;
+      // this.replydownLikeCommentStatus = replydownLikeCommentStatus;
+      let { like_count, like_status, content } = this.article;
+      this.count = like_count;
+      this.like_status = like_status;
+      if (this.like_status > 0) {
+        this.likeClass = "xin click";
+      }
+      // 动态添加额外需要的属性，这样才会其效果
+      comments.forEach((item, index) => {
+        this.$set(item, "toggleAnswer", false);
+        comments[index].toggleAnswer = false;
+        replyLikeCommentStatus.forEach(likeItem => {
+          if (likeItem.comment_id == item.id) {
+            this.$set(item, "reply_like_status", true);
+            comments[index].reply_like_status = true;
+            // this.$set(item, "reply_down_status", true);
+            // comments[index].reply_down_status = true;
           }
-          res.data.comments.forEach(item => {
-            this.$set(item, "toggleAnswer", false);
-            this.$set(item, "children", []);
-            res.data.answerComments.forEach(child => {
-              if (item.id == child.parent_id) {
-                this.$set(child, "toggleAnswer", false);
-                item.children.push(child);
+        });
+        // replydownLikeCommentStatus.forEach(likeItem => {
+        //   if (likeItem.comment_id == item.id) {
+        //     this.$set(item, "reply_down_status", true);
+        //     comments[index].reply_down_status = true;
+        //     // this.$set(item, "reply_down_status", true);
+        //     // comments[index].reply_down_status = true;
+        //   }
+        // });
+
+        this.$set(item, "children", []);
+        answerComments.forEach((child, index) => {
+          if (item.id == child.parent_id) {
+            this.$set(child, "toggleAnswer", false);
+            answerComments[index].toggleAnswer = false;
+            replyLikeAnswerStatus.forEach(likeItem => {
+              if (likeItem.answer_id == child.id) {
+                this.$set(child, "reply_like_status", true);
+                answerComments[index].reply_like_status = true;
               }
             });
-          });
-          this.comments = res.data.comments;
-          this.code = translateMarkdown(res.data.article.content);
+            item.children.push(child);
+          }
         });
+      });
+      this.comments = comments;
+      this.code = translateMarkdown(content);
     }
   }
+  //   async getArticleDetail() {
+  //     let decoded = null;
+  //     if (sessionStorage.getItem("token")) {
+  //       decoded = jwtToken(sessionStorage.getItem("token"));
+  //     }
+  //     let data = {
+  //       article_id: this.$route.query.id,
+  //       user_id: decoded ? decoded.id : ""
+  //     };
+  //     let {
+  //       data: { article, comments, answerComments, replyLikeStatus }
+  //     } = await getSingArticle(data);
+  //     this.article = article;
+  //     this.replyLikeStatus = replyLikeStatus;
+  //     let { like_count, like_status, content } = this.article;
+  //     this.count = like_count;
+  //     this.like_status = like_status;
+  //     if (this.like_status > 0) {
+  //       this.likeClass = "xin click";
+  //     }
+  //     // 动态添加额外需要的属性，这样才会其效果
+  //     comments.forEach((item, index) => {
+  //       this.$set(item, "toggleAnswer", false);
+  //       comments[index].toggleAnswer = false;
+  //       replyLikeStatus.forEach(likeItem => {
+  //         if (likeItem.comment_id == item.id) {
+  //           this.$set(item, "reply_like_status", true);
+  //           comments[index].reply_like_status = true;
+  //         }
+  //       });
+  //       // this.$set(item, "toggleUpZan", false);
+  //       // comments[index].toggleUpZan = false;
+  //       // this.$set(item, "toggleDownZan", false);
+  //       // comments[index].toggleDownZan = false;
+
+  //       this.$set(item, "children", []);
+  //       answerComments.forEach((child, index) => {
+  //         if (item.id == child.parent_id) {
+  //           this.$set(child, "toggleAnswer", false);
+  //           answerComments[index].toggleAnswer = false;
+  //           replyLikeStatus.forEach(likeItem => {
+  //             if (likeItem.comment_id == child.id - 1) {
+  //               this.$set(child, "reply_like_status", true);
+  //               answerComments[index].reply_like_status = true;
+  //             }
+  //           });
+  //           // this.$set(child, "toggleUpZan", false);
+  //           // answerComments[index].toggleUpZan = false;
+  //           // this.$set(child, "toggleDownZan", false);
+  //           // answerComments[index].toggleDownZan = false;
+  //           item.children.push(child);
+  //         }
+  //       });
+  //     });
+  //     console.log(comments);
+  //     this.comments = comments;
+  //     this.code = translateMarkdown(content);
+  //   }
+  // }
 };
 </script>
 <style lang="scss" scoped>
