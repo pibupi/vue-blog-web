@@ -2,29 +2,34 @@
   <div class="header-wrap">
     <div class="logo-wrap">
       <div class="logo">
-        Logo
+        <span>打杂的！</span>
       </div>
-      <el-input
-        placeholder="请输入内容"
-        v-model="pagination.keywords"
-        class="search-input"
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="articleSearch"
-        ></el-button>
-      </el-input>
+
+      <!-- </input> -->
     </div>
     <div class="nav-right" clearfix>
+      <div class="search-wrap">
+        <input
+          placeholder="搜索文章"
+          v-model="pagination.keywords"
+          class="search-input"
+        />
+        <span
+          @click="articleSearch"
+          class="iconfont icon-sousuo2 search-btn"
+        ></span>
+      </div>
       <ul class="nav-right-ul clearfix">
         <li class="mouhover">
           <router-link to="/home" tag="span">首页</router-link>
+          <!-- <span @click="toHome">首页</span> -->
         </li>
         <li><router-link to="/back" tag="span">归档</router-link></li>
         <li><router-link to="/category" tag="span">分类</router-link></li>
         <li><router-link to="/about" tag="span">关于</router-link></li>
         <li><router-link to="/wall" tag="span">留言墙</router-link></li>
+      </ul>
+      <div class="head-btn">
         <span v-if="!isLogin">
           <el-button size="small" @click="openLoginDialog">登录</el-button>
           <el-button size="small" @click="openRegisDialog">注册</el-button>
@@ -32,7 +37,7 @@
         <span v-else>
           <el-button size="small" @click="logOut">退出登录</el-button>
         </span>
-      </ul>
+      </div>
     </div>
     <el-dialog
       :title="title"
@@ -112,6 +117,9 @@ export default {
     })
   },
   methods: {
+    // toHome() {
+    //   this.$router.push({ name: "home" });
+    // },
     ...mapActions(["getArticleListAction", "logout"]),
     ...mapMutations(["LOGIN_SUCCESS"]),
     logOut() {
@@ -201,44 +209,96 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header-wrap {
-  height: 80px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   padding: 50px 10% 0 10%;
   .logo-wrap {
     display: flex;
     justify-content: flex-start;
-    width: 50%;
-    .logo {
-      flex: 1 0 100px;
+    width: 16%;
+    // @media (max-width: 1032px) {
+    //   display: none;
+    // }
+    @media (max-width: 575px) {
+      display: block;
     }
-    .search-input {
-      min-width: 200px;
-      width: 100%;
+    .logo {
+      flex: 1 0 130px;
+      font-size: 30px;
+      font-weight: bolder;
+      color: #555;
+      min-width: 130px;
+      @media (max-width: 575px) {
+        font-size: 20px;
+      }
+      @media (max-width: 1032px) {
+        display: none;
+      }
+      @media (max-width: 575px) {
+        display: block;
+      }
     }
   }
   .nav-right {
-    min-width: 400px;
-    // min-width: 500px;
-    @media (max-width: 930px) {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 84%;
+    @media (max-width: 575px) {
       display: none;
     }
-  }
-  .nav-right-ul {
-    // width: 100%;
-    min-width: 100%;
-    li {
-      float: left;
-      // margin-right: 10px;
-      font-weight: bolder;
-      padding: 5px 10px;
-      border-radius: 10px;
-      transition: all 0.5s;
-      cursor: pointer;
-      &:hover {
-        transform: translateY(-5px);
-        background-color: #2821fc;
-        color: #fff;
+    .search-wrap {
+      margin-right: 5%;
+      min-width: 200px;
+      @media (max-width: 718px) {
+        display: none;
+      }
+      .search-input {
+        width: 80%;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        height: 30px;
+        padding: 5px;
+        @media (max-width: 940px) {
+          display: none;
+        }
+      }
+      .search-btn {
+        font-size: 20px;
+        margin-top: 2px;
+        cursor: pointer;
+        @media (max-width: 940px) {
+          display: none;
+        }
+      }
+    }
+    .nav-right-ul {
+      margin-right: 5%;
+      // width: 100%;
+      min-width: 313px;
+      li {
+        float: left;
+        margin-left: 2%;
+        font-weight: bolder;
+        padding: 5px 10px;
+        border-radius: 10px;
+        transition: all 0.5s;
+        cursor: pointer;
+        &:hover {
+          transform: translateY(-5px);
+          background-color: #2821fc;
+          color: #fff;
+        }
+      }
+    }
+    .head-btn {
+      float: right;
+      min-width: 130px;
+      // width: 100%;
+      display: inline-block;
+      @media (max-width: 545px) {
+        display: none;
       }
     }
   }

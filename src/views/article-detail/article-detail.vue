@@ -1,14 +1,41 @@
 <template>
-  <div>
-    <div className="detailed-title">
-      <h1 style="text-align:center;">{{ article.title }}</h1>
+  <div class="article-list-wrap">
+    <div class="detailed-title">
+      <h1 class="detail-head-title">
+        {{ article.title }}
+      </h1>
+      <div class="user-info">
+        <span class="detail-author">{{ article.author }}</span>
+        <span class="detail-line"></span>
+        <!-- <span class="detail-time">{{ article.createdAt }}</span> -->
+        <span class="detail-time">
+          {{ article.createdAt | dateformat("YYYY-MM-DD") }}
+        </span>
+        <span class="detail-line"></span>
+        <i class="iconfont icon-biaoqian" style="marginLeft:10px;"
+          ><el-tag
+            size="small"
+            type="success"
+            style="marginLeft:5px;position:relative;top:-2px;"
+            >{{ article.category_name }}</el-tag
+          ></i
+        >
+      </div>
     </div>
     <div class="content">
       <div>
-        <div className="detailed-content" id="mark" v-html="code"></div>
-        <div class="pick" @click="likeClick">
-          <span :class="likeClass">♥</span>
-          <span class="count">{{ count }}</span>
+        <div class="detailed-content" id="mark" v-html="code"></div>
+        <div class="pick">
+          <div class="pick-category">
+            <span>
+              <i class="iconfont icon-biaoqian"></i>
+              <span style="marginLeft:10px;">{{ article.category_name }}</span>
+            </span>
+          </div>
+          <div class="clickxin">
+            <span :class="likeClass" @click="likeClick">♥</span>
+            <span class="count">{{ count }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -90,7 +117,7 @@ export default {
         //   ...params,
         //   createdAt: Date.now()
         // };
-        // this.comments.unshift(data);
+        // this.comments.unshift(params);
         this.getArticleDetail();
         console.log(this.comments);
       } else {
@@ -194,79 +221,36 @@ export default {
       this.code = translateMarkdown(content);
     }
   }
-  //   async getArticleDetail() {
-  //     let decoded = null;
-  //     if (sessionStorage.getItem("token")) {
-  //       decoded = jwtToken(sessionStorage.getItem("token"));
-  //     }
-  //     let data = {
-  //       article_id: this.$route.query.id,
-  //       user_id: decoded ? decoded.id : ""
-  //     };
-  //     let {
-  //       data: { article, comments, answerComments, replyLikeStatus }
-  //     } = await getSingArticle(data);
-  //     this.article = article;
-  //     this.replyLikeStatus = replyLikeStatus;
-  //     let { like_count, like_status, content } = this.article;
-  //     this.count = like_count;
-  //     this.like_status = like_status;
-  //     if (this.like_status > 0) {
-  //       this.likeClass = "xin click";
-  //     }
-  //     // 动态添加额外需要的属性，这样才会其效果
-  //     comments.forEach((item, index) => {
-  //       this.$set(item, "toggleAnswer", false);
-  //       comments[index].toggleAnswer = false;
-  //       replyLikeStatus.forEach(likeItem => {
-  //         if (likeItem.comment_id == item.id) {
-  //           this.$set(item, "reply_like_status", true);
-  //           comments[index].reply_like_status = true;
-  //         }
-  //       });
-  //       // this.$set(item, "toggleUpZan", false);
-  //       // comments[index].toggleUpZan = false;
-  //       // this.$set(item, "toggleDownZan", false);
-  //       // comments[index].toggleDownZan = false;
-
-  //       this.$set(item, "children", []);
-  //       answerComments.forEach((child, index) => {
-  //         if (item.id == child.parent_id) {
-  //           this.$set(child, "toggleAnswer", false);
-  //           answerComments[index].toggleAnswer = false;
-  //           replyLikeStatus.forEach(likeItem => {
-  //             if (likeItem.comment_id == child.id - 1) {
-  //               this.$set(child, "reply_like_status", true);
-  //               answerComments[index].reply_like_status = true;
-  //             }
-  //           });
-  //           // this.$set(child, "toggleUpZan", false);
-  //           // answerComments[index].toggleUpZan = false;
-  //           // this.$set(child, "toggleDownZan", false);
-  //           // answerComments[index].toggleDownZan = false;
-  //           item.children.push(child);
-  //         }
-  //       });
-  //     });
-  //     console.log(comments);
-  //     this.comments = comments;
-  //     this.code = translateMarkdown(content);
-  //   }
-  // }
 };
 </script>
 <style lang="scss" scoped>
 .xin {
-  float: right;
+  // float: right;
   margin-right: 30px;
   font-size: 36px;
   font-weight: bolder;
+  cursor: pointer;
 }
 .pick {
-  position: relative;
-  left: 95%;
+  // position: relative;
+  // left: 95%;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
   overflow: hidden;
-  display: inline-block;
+  // display: inline-block;
+  @media (max-width: 930px) {
+    left: 90%;
+  }
+  @media (max-width: 600px) {
+    left: 80%;
+  }
+  .clickxin {
+    position: relative;
+  }
+  .pick-category {
+    padding-top: 15px;
+  }
 }
 .click {
   color: red;
@@ -279,9 +263,15 @@ export default {
   bottom: 6px;
 }
 .content {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   overflow: hidden;
+  @media (max-width: 930px) {
+    width: 80%;
+  }
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 }
 .bread-div {
   padding: 0.5rem;
@@ -289,9 +279,48 @@ export default {
   background-color: #e1f0ff;
 }
 .detailed-title {
-  font-size: 1.8rem;
   text-align: center;
   padding: 1rem;
+  .detail-head-title {
+    font-size: 1.8rem;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    margin: 30px auto 0;
+    width: 80%;
+    border: none;
+    @media (max-width: 930px) {
+      font-size: 20px !important;
+    }
+    @media (max-width: 375px) {
+      font-size: 16px !important;
+      margin: 0 auto;
+    }
+  }
+  .user-info {
+    margin-top: 20px;
+    .detail-line {
+      &:before {
+        display: inline-block;
+        content: "";
+        width: 1px;
+        height: 10px;
+        background-color: #e8e8e8;
+        // border: 1px solid #555;
+      }
+    }
+    .detail-author {
+      color: #555;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    .detail-time {
+      margin-left: 10px;
+      color: #555;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+  }
 }
 .center {
   text-align: center;
@@ -305,8 +334,9 @@ export default {
   color: #555 !important;
 }
 #mark /deep/ p {
-  font-size: 1rem;
-  line-height: 1.5em;
+  font-family: Lato, PingFang, SC, Microsoft YaHei, sans-serif !important;
+  font-size: 14px;
+  line-height: 1.7em;
 }
 #mark /deep/ ol li {
   font-size: 1rem;
@@ -318,16 +348,16 @@ export default {
   padding: 0.5rem !important;
   overflow-y: auto;
   font-weight: 300;
-  font-family: Menlo, monospace;
+  background-color: #f7f7f7 !important;
   border-radius: 0.3rem;
-}
-#mark /deep/ pre {
-  background-color: #283646 !important;
+  margin: 20px 0;
 }
 #mark /deep/ pre > code {
   border: 0px !important;
-  background-color: #283646 !important;
-  color: #fff;
+  background-color: #f7f7f7 !important;
+  font-size: 13px;
+  color: #555;
+  font-family: consolas, Menlo, PingFang SC, Microsoft YaHei, monospace !important;
 }
 #mark /deep/ code {
   display: inline-block;
@@ -340,7 +370,12 @@ export default {
   color: #4f4f4f;
   margin: 0px 3px;
 }
-
+#mark /deep/ pre > code .hljs-string {
+  color: #50a14f;
+}
+#mark /deep/ .hljs-built_in {
+  color: #c18401;
+}
 .title-anchor {
   color: #888 !important;
   padding: 4px !important;

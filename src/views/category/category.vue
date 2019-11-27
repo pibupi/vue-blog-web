@@ -1,6 +1,7 @@
 <template>
   <div class="tags-wrap">
     <div class="split-line-wrap">
+      <i class="iconfont icon-biaoqian"></i>
       <span class="split-title">分类</span>
       <span class="split-line"></span>
     </div>
@@ -48,25 +49,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tags-wrap {
-  margin: 30px auto;
+  margin: 60px auto;
   width: 80%;
   .split-line-wrap {
     display: flex;
     justify-content: flex-start;
     position: relative;
     .split-title {
+      margin-left: 10px;
       width: 40px;
       font-size: 13px;
       font-weight: bolder;
     }
     .split-line {
-      position: absolute;
-      top: 10px;
-      right: 0;
-      display: inline-block;
-      height: 0;
-      width: 92%;
-      border: 2px solid #dcdfe7;
+      width: 100%;
+      &:before {
+        display: inline-block;
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: 0;
+        display: inline-block;
+        height: 2px;
+        width: 92%;
+        background-color: #dcdfe7;
+      }
     }
   }
   .category-wrap {
