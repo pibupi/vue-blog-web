@@ -4,18 +4,18 @@
     <transition name="fade-transform" mode="out-in">
       <router-view></router-view>
     </transition>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 import Header from "@/components/header/header.vue";
-import Footer from "@/components/footer/footer.vue";
+// import Footer from "@/components/footer/footer.vue";
 export default {
   name: "home",
   components: {
-    Header,
-    Footer
+    Header
+    // Footer
   }
 };
 </script>

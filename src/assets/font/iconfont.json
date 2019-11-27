@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "101061",
+      "name": "评论",
+      "font_class": "icon1",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "423695",
+      "name": "眼睛",
+      "font_class": "yanjing",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "669832",
+      "name": "搜索",
+      "font_class": "sousuo1",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
       "icon_id": "689262",
       "name": "类目 品类 分类 类别",
       "font_class": "leimupinleifenleileibie",
@@ -55,6 +76,20 @@
       "unicode_decimal": 58889
     },
     {
+      "icon_id": "1082509",
+      "name": "信息 (1)",
+      "font_class": "xinxi1",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "1278266",
+      "name": "搜索",
+      "font_class": "sousuo2",
+      "unicode": "e89c",
+      "unicode_decimal": 59548
+    },
+    {
       "icon_id": "1467314",
       "name": "bad",
       "font_class": "bad",
@@ -67,6 +102,13 @@
       "font_class": "bad-o",
       "unicode": "e685",
       "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "1957876",
+      "name": "标签",
+      "font_class": "biaoqian",
+      "unicode": "e604",
+      "unicode_decimal": 58884
     },
     {
       "icon_id": "3683441",
@@ -118,6 +160,13 @@
       "unicode_decimal": 58939
     },
     {
+      "icon_id": "5174622",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
       "icon_id": "5233413",
       "name": "分类",
       "font_class": "tubiao-",
@@ -165,6 +214,13 @@
       "font_class": "pinglun",
       "unicode": "e62a",
       "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "9713061",
+      "name": "点赞",
+      "font_class": "dianzan6",
+      "unicode": "e680",
+      "unicode_decimal": 59008
     },
     {
       "icon_id": "9874479",

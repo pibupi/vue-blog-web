@@ -2,6 +2,7 @@
   <div class="comment-wrap">
     <div class="split-line-wrap">
       <span class="split-title">评论</span>
+      <i class="iconfont icon-icon1"></i>
       <span class="split-line"></span>
     </div>
     <div class="commen-editor-wrap">
@@ -13,9 +14,11 @@
         @blur="changeEditContent"
       ></div>
     </div>
-    <el-button size="small" style="float:right;" @click="sendComment"
-      >发送评论</el-button
-    >
+    <i
+      class="iconfont icon-fasong"
+      style="float:right;cursor:pointer;"
+      @click="sendComment"
+    ></i>
     <!-- 用户评论 -->
     <div
       class="commen-content clearfix"
@@ -43,10 +46,11 @@
               >
                 <span class="count">{{ item.reply_like_count }}</span>
                 <i
+                  style="cursor:pointer;"
                   :class="
                     item.reply_like_status
-                      ? 'iconfont icon-dianzan_active-copy'
-                      : 'iconfont icon-dianzan21'
+                      ? 'iconfont icon-dianzan6 zan'
+                      : 'iconfont icon-dianzan6'
                   "
                   class="topzan"
                 ></i>
@@ -61,9 +65,11 @@
                 ></i>
               </span> -->
               <!-- 父评论回复 -->
-              <span class="answer" @click="answer(item.id, item.displayName)"
-                >回复</span
-              >
+              <i
+                class=" iconfont icon-xinxi"
+                style="cursor:pointer;marginLeft:10px;"
+                @click="answer(item.id, item.displayName)"
+              ></i>
             </div>
           </div>
           <!-- 回复评论 -->
@@ -94,10 +100,11 @@
                       >
                         <span class="count">{{ child.reply_like_count }}</span>
                         <i
+                          style="cursor:pointer;"
                           :class="
                             child.reply_like_status
-                              ? 'iconfont  icon-dianzan5'
-                              : 'iconfont icon-dianzan21'
+                              ? 'iconfont icon-dianzan6 zan'
+                              : 'iconfont icon-dianzan6'
                           "
                           class="topzan"
                         ></i>
@@ -112,11 +119,11 @@
                         ></i>
                       </span> -->
                       <!-- 子评论回复 -->
-                      <span
-                        class="answer"
+                      <i
+                        class="iconfont icon-xinxi"
+                        style="cursor:pointer;marginLeft:10px;"
                         @click="answer(child.parent_id, child.displayName)"
-                        >回复</span
-                      >
+                      ></i>
                     </div>
                   </div>
                   <div v-if="child.toggleAnswer" class="answer-input-wrap">
@@ -125,25 +132,19 @@
                       v-model="answerMsg"
                       class="answerInput"
                     />
-                    <el-button
-                      @click="sendAnswer"
-                      size="small"
-                      class="send-answer-button"
-                      >回复</el-button
-                    >
+                    <i @click="sendAnswer" class="iconfont icon-xinxi"></i>
                   </div>
                 </li>
               </ul>
             </li>
           </ul>
-          <div v-if="item.toggleAnswer" class="answer-input-wrap">
+          <div v-if="item.toggleAnswer" class="answer-input-wrap sendbtn">
             <input type="text" v-model="answerMsg" class="answerInput" />
-            <el-button
+            <i
               @click="sendAnswer"
               size="small"
-              class="send-answer-button"
-              >回复</el-button
-            >
+              class=" iconfont icon-fasong huifubtn"
+            ></i>
           </div>
         </li>
       </ul>
@@ -339,6 +340,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.zan {
+  color: #1890ff;
+}
 .topzan {
   font-size: 20px;
 }
@@ -361,6 +365,12 @@ export default {
   margin: 0 auto;
   margin-bottom: 100px;
   margin-top: 50px;
+  @media (max-width: 930px) {
+    width: 85%;
+  }
+  @media (max-width: 600px) {
+    width: 90%;
+  }
   .split-line-wrap {
     display: flex;
     justify-content: flex-start;
@@ -376,7 +386,7 @@ export default {
       display: inline-block;
       height: 0;
       width: 92%;
-      border: 2px solid #dcdfe7;
+      border: 1px solid #dcdfe7;
     }
   }
   .commen-editor-wrap {
@@ -392,6 +402,9 @@ export default {
       min-width: 60px;
       font-weight: bolder;
       display: inline-block;
+      @media (max-width: 600px) {
+        display: none;
+      }
     }
     .commen-editor {
       min-height: 80px;
@@ -402,6 +415,9 @@ export default {
       padding: 20px;
       transition: all 0.5s;
       box-sizing: border-box;
+      @media (max-width: 600px) {
+        width: 100%;
+      }
       &:hover {
         border: 2px solid #1890ff;
       }
@@ -443,7 +459,9 @@ export default {
           }
         }
         .answer-input-wrap {
+          padding-bottom: 60px;
           overflow: hidden;
+          // position: relative;
           .answerInput {
             min-height: 20px;
             width: 98%;
@@ -459,6 +477,9 @@ export default {
             }
           }
           .send-answer-button {
+            // position: absolute;
+            // right: 0;
+            // top: 100%;
             margin-top: 20px;
             float: right;
             margin-bottom: 20px;
@@ -466,6 +487,15 @@ export default {
         }
       }
     }
+  }
+  .sendbtn {
+    position: relative;
+  }
+  .huifubtn {
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    cursor: pointer;
   }
 }
 </style>

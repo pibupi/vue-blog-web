@@ -6,16 +6,20 @@ import {
   pagination,
   Dialog,
   Form,
-  FormItem
+  FormItem,
+  Tag
 } from "element-ui";
 import App from "./App.vue";
 import "./registerServiceWorker";
+import moment from "moment";
 import router from "./router";
 import store from "./store";
 import animated from "animate.css";
 import "./assets/scss/reset.scss";
 import "./assets/font/iconfont.css";
-
+Vue.filter("dateformat", function(dataStr, pattern = "YYYY-MM-DD") {
+  return moment(dataStr).format(pattern);
+});
 Vue.use(animated);
 Vue.use(Input)
   .use(Button)
@@ -23,6 +27,7 @@ Vue.use(Input)
   .use(Dialog)
   .use(Form)
   .use(FormItem)
+  .use(Tag)
   .use(Card);
 Vue.config.productionTip = false;
 
