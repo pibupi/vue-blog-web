@@ -1,10 +1,13 @@
 <template>
   <div class="layout">
     <Header />
-    <transition name="fade-transform" mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <div class="wrap">
+      <transition name="fade-transform" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
     <!-- <Footer /> -->
+    <el-backtop target=".layout"></el-backtop>
   </div>
 </template>
 
@@ -34,4 +37,8 @@ export default {
   opacity: 0;
   transform: translateX(30px);
 }
+// .wrap {
+//   height: 100vh;
+//   overflow: auto;
+// }
 </style>

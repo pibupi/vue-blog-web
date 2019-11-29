@@ -4,12 +4,19 @@ const state = {
   articleList: [],
   pagination: {
     current: 1,
-    pageSize: 2,
+    pageSize: 5,
     keywords: ""
   },
   count: null
 };
-const getters = {};
+const getters = {
+  articleList: state => {
+    state.articleList.forEach(item => {
+      item.color = "#1890ff";
+    });
+    return state.articleList;
+  }
+};
 const mutations = {
   GET_ARTICLE_LIST(state, payload) {
     state.articleList = payload.articleList;

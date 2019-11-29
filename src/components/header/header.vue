@@ -24,7 +24,7 @@
           <router-link to="/home" tag="span">首页</router-link>
           <!-- <span @click="toHome">首页</span> -->
         </li>
-        <li><router-link to="/back" tag="span">归档</router-link></li>
+        <li><router-link to="/archive" tag="span">归档</router-link></li>
         <li><router-link to="/category" tag="span">分类</router-link></li>
         <li><router-link to="/about" tag="span">关于</router-link></li>
         <li><router-link to="/wall" tag="span">留言墙</router-link></li>
@@ -213,6 +213,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 50px 10% 0 10%;
+  margin-bottom: 60px;
   .logo-wrap {
     display: flex;
     justify-content: flex-start;
@@ -293,7 +294,6 @@ export default {
       }
     }
     .head-btn {
-      float: right;
       min-width: 130px;
       // width: 100%;
       display: inline-block;

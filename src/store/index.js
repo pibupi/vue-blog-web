@@ -4,6 +4,7 @@ import article from "./module/article";
 import category from "./module/category";
 import comment from "./module/comment";
 import login from "./module/login";
+import archive from "./module/archive";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     article,
     category,
     comment,
-    login
+    login,
+    archive
   }
 });

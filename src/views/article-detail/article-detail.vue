@@ -46,6 +46,7 @@
       :replyLikeCommentStatus="replyLikeCommentStatus"
       :replyLikeAnswerStatus="replyLikeAnswerStatus"
     />
+    <scroll-top></scroll-top>
   </div>
 </template>
 <script>
@@ -60,6 +61,7 @@ import "highlight.js/styles/monokai-sublime.css";
 import { Message } from "element-ui";
 import { clickLikeArticle, getSingArticle } from "../../service/article";
 import { translateMarkdown } from "../../lib/markdown";
+import ScrollTop from "@/components/scrolltop/scrolltop";
 export default {
   data() {
     return {
@@ -77,7 +79,8 @@ export default {
     };
   },
   components: {
-    Comments
+    Comments,
+    ScrollTop
   },
   created() {
     this.getArticleDetail();
@@ -109,17 +112,11 @@ export default {
       });
       this.code = marked(this.code);
     },
+    // 发送父级评论
     async send(params) {
       if (params.content) {
         await this.sendCommentAction(params);
-        // console.log(params);
-        // let data = {
-        //   ...params,
-        //   createdAt: Date.now()
-        // };
-        // this.comments.unshift(params);
         this.getArticleDetail();
-        console.log(this.comments);
       } else {
         Message.warning({
           message: "评论内容不能为空"
