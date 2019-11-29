@@ -73,7 +73,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .article-wrap {
+  // overflow: hidden;
   margin-top: 60px;
+  // margin-bottom: 200px;
   .article-container {
     padding: 0 5%;
     @media (max-width: 930px) {

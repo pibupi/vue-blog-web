@@ -55,15 +55,6 @@
                   class="topzan"
                 ></i>
               </span>
-              <!-- <span @click="down(item)" style="marginRight:10px;">
-                <i
-                  :class="
-                    item.reply_down_status
-                      ? 'iconfont icon-dianzan11'
-                      : 'iconfont icon-dianzan1'
-                  "
-                ></i>
-              </span> -->
               <!-- 父评论回复 -->
               <i
                 class=" iconfont icon-xinxi"
@@ -109,15 +100,6 @@
                           class="topzan"
                         ></i>
                       </span>
-                      <!-- <span @click="down(child)" style="marginRight:10px;">
-                        <i
-                          :class="
-                            child.reply_down_status
-                              ? 'iconfont icon-dianzan2'
-                              : 'iconfont icon-dianzan1'
-                          "
-                        ></i>
-                      </span> -->
                       <!-- 子评论回复 -->
                       <i
                         class="iconfont icon-xinxi"
@@ -164,9 +146,6 @@ export default {
     comments: {
       type: Array
     },
-    // replyLikeStatus: {
-    //   type: Array
-    // }
     replyLikeCommentStatus: {
       type: Array
     },
@@ -193,7 +172,6 @@ export default {
       displayName: state => state.login.displayName
     })
   },
-  created() {},
   methods: {
     up(item) {
       let status = false;
@@ -230,9 +208,6 @@ export default {
           console.log(res);
           if (res.code === 0) {
             this.$emit("getArticleDetail");
-            // console.log(item.reply_like_status);
-            // item.reply_like_status = !item.reply_like_status;
-            // console.log(item.reply_like_status);
           }
         });
     },
@@ -282,6 +257,7 @@ export default {
           }
         });
     },
+    // 发送父级评论
     async sendComment() {
       if (this.isLogin) {
         let params = {
@@ -296,12 +272,12 @@ export default {
         return;
       }
     },
+    // 获取编辑框内容
     changeEditContent() {
       this.commentContent = this.$refs.editor.innerHTML;
     },
     // 弹出回复框
     answer(id, displayName) {
-      console.log(id);
       this.answerId = id;
       this.answerDiaplayName = displayName;
       if (this.displayName === displayName) {
@@ -326,12 +302,10 @@ export default {
         displayName: this.displayName,
         createdAt: Date.now()
       };
-      console.log(data);
       sendAnswerComment(data).then(res => {
         if (res.code == 0) {
           this.answer(this.answerId, this.answerDiaplayName);
           let item = this.comments.find(item => item.id === this.answerId);
-          // item.children.push(data);
           this.$emit("getArticleDetail");
         }
       });
@@ -363,8 +337,9 @@ export default {
 .comment-wrap {
   width: 80%;
   margin: 0 auto;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
   margin-top: 50px;
+  overflow: hidden;
   @media (max-width: 930px) {
     width: 85%;
   }

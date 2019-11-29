@@ -12,18 +12,22 @@
       >
       </el-pagination>
     </div>
+    <scroll-top></scroll-top>
   </div>
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 // import Swiper from "@/components/swiper/swiper.vue";
 import Article from "@/components/articles/articles.vue";
+import ScrollTop from "@/components/scrolltop/scrolltop";
 export default {
   name: "home",
   components: {
     // Swiper,
-    Article
+    Article,
+    ScrollTop
   },
+
   computed: {
     ...mapState({
       count: state => state.article.count,
@@ -44,6 +48,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.home-wrap {
+  margin-bottom: 200px;
+}
 .pagination-wrap {
   width: 0;
   margin: 30px auto;

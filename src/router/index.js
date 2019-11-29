@@ -6,7 +6,7 @@ import Category from "../views/category/category.vue";
 import About from "../views/about/about.vue";
 import ArticleDetail from "../views/article-detail/article-detail.vue";
 import Wall from "../views/wall/wall.vue";
-import Back from "../views/back/back.vue";
+import Archive from "../views/archive/archive.vue";
 
 Vue.use(VueRouter);
 
@@ -49,10 +49,10 @@ const routes = [
         component: Wall
       },
       {
-        path: "back",
-        name: "back",
+        path: "archive",
+        name: "archive",
         meta: { index: 1 },
-        component: Back
+        component: Archive
       }
     ]
   }
