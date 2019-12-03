@@ -11,7 +11,10 @@ import {
   Timeline,
   TimelineItem,
   Backtop,
-  Tooltip
+  Tooltip,
+  Icon,
+  Image,
+  Avatar
 } from "element-ui";
 import App from "./App.vue";
 import "./registerServiceWorker";
@@ -36,33 +39,36 @@ Vue.use(Input)
   .use(TimelineItem)
   .use(Backtop)
   .use(Tooltip)
+  .use(Icon)
+  .use(Image)
+  .use(Avatar)
   .use(Card);
 Vue.config.productionTip = false;
 // 解决elementui打开模态框给body加padding-right 17px的问题
-// function handlePadding() {
-//   let MutationObserver =
-//     window.MutationObserver ||
-//     window.WebKitMutationObserver ||
-//     window.MozMutationObserver;
+function handlePadding() {
+  let MutationObserver =
+    window.MutationObserver ||
+    window.WebKitMutationObserver ||
+    window.MozMutationObserver;
 
-//   let observer = new MutationObserver(mutations => {
-//     //console.log('mutations',mutations)
-//     mutations.forEach(item => {
-//       if ("style" == item.attributeName) {
-//         document.body.style.padding = 0;
-//       }
-//     });
-//   });
+  let observer = new MutationObserver(mutations => {
+    //console.log('mutations',mutations)
+    mutations.forEach(item => {
+      if ("style" == item.attributeName) {
+        document.body.style.padding = 0;
+      }
+    });
+  });
 
-//   var body = document.body;
+  var body = document.body;
 
-//   var options = {
-//     attributes: true
-//   };
+  var options = {
+    attributes: true
+  };
 
-//   observer.observe(body, options);
-// }
-// handlePadding();
+  observer.observe(body, options);
+}
+handlePadding();
 new Vue({
   router,
   store,

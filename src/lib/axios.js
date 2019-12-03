@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "@/config";
+import { Loading } from "element-ui";
 class HttpRequest {
   constructor(baseUrl = baseURL) {
     this.baseUrl = baseUrl;

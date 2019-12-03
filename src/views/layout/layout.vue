@@ -1,24 +1,21 @@
 <template>
   <div class="layout">
     <Header />
-    <div class="wrap">
+    <div class="wrap" id="wrap">
       <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
       </transition>
+      <el-backtop target=".wrap"></el-backtop>
     </div>
-    <!-- <Footer /> -->
-    <el-backtop target=".layout"></el-backtop>
   </div>
 </template>
 
 <script>
 import Header from "@/components/header/header.vue";
-// import Footer from "@/components/footer/footer.vue";
 export default {
-  name: "home",
+  name: "layout",
   components: {
     Header
-    // Footer
   }
 };
 </script>
@@ -37,8 +34,10 @@ export default {
   opacity: 0;
   transform: translateX(30px);
 }
-// .wrap {
-//   height: 100vh;
-//   overflow: auto;
-// }
+.wrap {
+  height: 100vh;
+  overflow: auto;
+  width: 100%;
+  margin: 0 auto;
+}
 </style>

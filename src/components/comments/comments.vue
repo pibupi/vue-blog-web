@@ -6,7 +6,11 @@
       <span class="split-line"></span>
     </div>
     <div class="commen-editor-wrap">
-      <div class="avatar">{{ displayName }}</div>
+      <div class="avatar">
+        <el-avatar size="large" style="fontSize:12px;">{{
+          displayName
+        }}</el-avatar>
+      </div>
       <div
         contenteditable="true"
         class="commen-editor"
@@ -26,7 +30,11 @@
       :key="item.id"
     >
       <div class="user-info">
-        <span class="avatar">头像</span>
+        <span class="avatar">
+          <el-avatar size="small" style="fontSize:12px;">{{
+            item.displayName
+          }}</el-avatar>
+        </span>
         <span style="marginLeft:10px;">{{ item.displayName }}</span>
       </div>
       <ul class="content">
@@ -67,7 +75,11 @@
           <ul class="answer-list">
             <li v-for="(child, index) in item.children" :key="index">
               <div class="user-info">
-                <span class="avatar">头像</span>
+                <span class="avatar">
+                  <el-avatar size="small" style="fontSize:12px;">{{
+                    child.displayName
+                  }}</el-avatar>
+                </span>
                 <span
                   style="marginLeft:10px;fontWeight:bolder;fontSize:12px;color: #6d757a;"
                   >{{ child.displayName }} :
@@ -155,15 +167,15 @@ export default {
   },
   data() {
     return {
-      commentContent: "",
-      answerMsg: "",
-      answerMsgOk: [],
-      parent_id: null,
-      answerId: null,
-      answerDiaplayName: "",
-      zanStatus: false,
-      buzanStatus: false,
-      zanId: null
+      commentContent: "", // 评论内容
+      answerMsg: "", // @前缀
+      // answerMsgOk: [],
+      parent_id: null, // 父级评论id
+      answerId: null, // 回复id
+      answerDiaplayName: "", // 评论昵称
+      zanStatus: false, // 点赞状态
+      // buzanStatus: false,
+      zanId: null // 点赞的评论id
     };
   },
   computed: {
@@ -173,6 +185,7 @@ export default {
     })
   },
   methods: {
+    // 父评论点赞
     up(item) {
       let status = false;
       this.replyLikeCommentStatus.forEach(result => {
@@ -211,6 +224,7 @@ export default {
           }
         });
     },
+    // 子评论点赞
     upChild(child) {
       let statuss = false;
       if (this.replyLikeAnswerStatus) {

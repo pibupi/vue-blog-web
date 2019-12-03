@@ -54,7 +54,6 @@ export default {
     ...mapState({
       count: state => state.article.count,
       pagination: state => state.article.pagination
-      // articleList: state => state.article.articleList
     })
   },
   methods: {

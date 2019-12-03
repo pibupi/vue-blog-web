@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="article-wrap ">
+    <div class="article-wrap " id="article-wrap">
+      <!-- 文章列表展示 -->
       <ul class="article-container ">
         <li
           class="article-list-item clearfix"
@@ -8,12 +9,8 @@
           :key="item.id"
         >
           <el-card shadow="hover" class="article-card">
-            <!-- <div style="display: flex;justify-content: space-between;"> -->
             <div>
               <div class="article-content">
-                <div class="article-img-wrap">
-                  <img :src="item.url" alt="" class="article-img" />
-                </div>
                 <div class="article-bottom-wrap">
                   <h1 class="article-title" @click="toSingleArticle(item.id)">
                     {{ item.title }}
@@ -21,7 +18,6 @@
                   <div class="article-desc">{{ item.desc }}</div>
                   <div class="article-bottom">
                     <p class="article-bottom-left">{{ item.author }}</p>
-                    <!-- <p class="article-bottom-right">{{ item.createdAt }}</p> -->
                     <p class="article-bottom-right">
                       <span>
                         <i class="iconfont icon-yanjing"></i>
@@ -45,6 +41,9 @@
                       {{ item.createdAt | dateformat("YYYY-MM-DD") }}
                     </p>
                   </div>
+                </div>
+                <div class="article-img-wrap" v-if="item.url">
+                  <el-image :src="item.url" alt="" class="article-img" lazy />
                 </div>
               </div>
             </div>
@@ -73,31 +72,34 @@ export default {
 </script>
 <style lang="scss" scoped>
 .article-wrap {
-  // overflow: hidden;
   margin-top: 60px;
-  // margin-bottom: 200px;
   .article-container {
-    padding: 0 5%;
+    padding: 0 0;
     @media (max-width: 930px) {
       padding: 0;
     }
     .article-list-item {
-      width: 80%;
+      width: 60%;
       margin: 0 auto;
       margin-top: 20px;
+      @media (max-width: 575px) {
+        width: 80%;
+      }
       .article-card {
         width: 100%;
+        padding-right: 30px;
+        &:hover {
+          background-color: #effbff;
+        }
         .article-img-wrap {
-          height: 200px;
-          width: 30%;
-          margin-right: 8%;
-          @media (max-width: 930px) {
-            display: none;
-          }
           .article-img {
+            margin-left: 8%;
             height: 100%;
-            width: 100%;
+            width: 300px;
             border-radius: 10px;
+            @media (max-width: 930px) {
+              display: none;
+            }
           }
         }
         .article-content {
@@ -111,7 +113,7 @@ export default {
             width: 90%;
           }
           .article-title {
-            font-size: 30px;
+            font-size: 20px;
             font-weight: bolder;
             cursor: pointer;
             @media (max-width: 930px) {
@@ -130,7 +132,7 @@ export default {
           }
           .article-bottom-wrap {
             position: relative;
-            width: 80%;
+            width: 100%;
             .article-bottom {
               position: absolute;
               left: 0;

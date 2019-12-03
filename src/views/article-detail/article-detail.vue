@@ -1,5 +1,6 @@
 <template>
   <div class="article-list-wrap">
+    <!-- 文章详情 -->
     <div class="detailed-title">
       <h1 class="detail-head-title">
         {{ article.title }}
@@ -7,7 +8,6 @@
       <div class="user-info">
         <span class="detail-author">{{ article.author }}</span>
         <span class="detail-line"></span>
-        <!-- <span class="detail-time">{{ article.createdAt }}</span> -->
         <span class="detail-time">
           {{ article.createdAt | dateformat("YYYY-MM-DD") }}
         </span>
@@ -46,7 +46,6 @@
       :replyLikeCommentStatus="replyLikeCommentStatus"
       :replyLikeAnswerStatus="replyLikeAnswerStatus"
     />
-    <scroll-top></scroll-top>
   </div>
 </template>
 <script>
@@ -61,7 +60,6 @@ import "highlight.js/styles/monokai-sublime.css";
 import { Message } from "element-ui";
 import { clickLikeArticle, getSingArticle } from "../../service/article";
 import { translateMarkdown } from "../../lib/markdown";
-import ScrollTop from "@/components/scrolltop/scrolltop";
 export default {
   data() {
     return {
@@ -79,8 +77,7 @@ export default {
     };
   },
   components: {
-    Comments,
-    ScrollTop
+    Comments
   },
   created() {
     this.getArticleDetail();
@@ -123,6 +120,7 @@ export default {
         });
       }
     },
+    // 点赞
     async likeClick() {
       if (!this.isLogin) {
         Message.warning({
@@ -149,6 +147,7 @@ export default {
         return;
       }
     },
+    // 获取文章详情
     async getArticleDetail() {
       let decoded = null;
       if (sessionStorage.getItem("token")) {
@@ -186,19 +185,8 @@ export default {
           if (likeItem.comment_id == item.id) {
             this.$set(item, "reply_like_status", true);
             comments[index].reply_like_status = true;
-            // this.$set(item, "reply_down_status", true);
-            // comments[index].reply_down_status = true;
           }
         });
-        // replydownLikeCommentStatus.forEach(likeItem => {
-        //   if (likeItem.comment_id == item.id) {
-        //     this.$set(item, "reply_down_status", true);
-        //     comments[index].reply_down_status = true;
-        //     // this.$set(item, "reply_down_status", true);
-        //     // comments[index].reply_down_status = true;
-        //   }
-        // });
-
         this.$set(item, "children", []);
         answerComments.forEach((child, index) => {
           if (item.id == child.parent_id) {

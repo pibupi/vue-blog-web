@@ -1,6 +1,6 @@
 const state = {
-  isLogin: false,
-  displayName: "",
+  isLogin: sessionStorage.getItem("islogin"),
+  displayName: sessionStorage.getItem("displayName"),
   token: sessionStorage.getItem("token")
 };
 const getters = {};
@@ -12,6 +12,7 @@ const mutations = {
       sessionStorage.setItem("displayName", displayName);
       state.displayName = displayName;
       state.isLogin = true;
+      sessionStorage.setItem("islogin", state.isLogin);
     }
   },
   LOG_OUT(state, payload) {
@@ -23,6 +24,8 @@ const actions = {
   logout({ commit }) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("displayName");
+    sessionStorage.removeItem("preUrl");
+    sessionStorage.removeItem("islogin");
     commit("LOG_OUT");
   }
 };

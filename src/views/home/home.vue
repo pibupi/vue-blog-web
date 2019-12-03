@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrap">
+  <div class="home-wrap" id="home">
     <!-- <Swiper /> -->
     <Article />
     <div class="pagination-wrap">
@@ -12,22 +12,18 @@
       >
       </el-pagination>
     </div>
-    <scroll-top></scroll-top>
   </div>
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 // import Swiper from "@/components/swiper/swiper.vue";
 import Article from "@/components/articles/articles.vue";
-import ScrollTop from "@/components/scrolltop/scrolltop";
 export default {
   name: "home",
   components: {
     // Swiper,
-    Article,
-    ScrollTop
+    Article
   },
-
   computed: {
     ...mapState({
       count: state => state.article.count,
