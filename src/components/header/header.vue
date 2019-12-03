@@ -193,7 +193,6 @@ export default {
   created() {
     // 获取github授权后的用户信息
     const username = window.location.search.split("=");
-    console.log(username);
     let userinfo = {
       username: username[1],
       password: username[1]

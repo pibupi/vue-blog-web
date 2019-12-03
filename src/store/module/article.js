@@ -43,7 +43,7 @@ const actions = {
         commit("GET_ARTICLE_LIST", { articleList, count });
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   },
   async getCategoryArticleAction({ commit }, category_id) {
@@ -53,7 +53,7 @@ const actions = {
         commit("GET_CATEGORY_ARTICLE", data);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   },
   clearArticleListAction({ commit }) {

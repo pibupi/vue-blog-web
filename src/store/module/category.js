@@ -16,7 +16,7 @@ const actions = {
         commit("GET_CATEGORY", data);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 };
