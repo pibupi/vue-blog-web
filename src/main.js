@@ -17,7 +17,7 @@ import {
   Avatar
 } from "element-ui";
 import App from "./App.vue";
-import "./registerServiceWorker";
+// import "./registerServiceWorker";
 import moment from "moment";
 import router from "./router";
 import store from "./store";
@@ -52,7 +52,6 @@ function handlePadding() {
     window.MozMutationObserver;
 
   let observer = new MutationObserver(mutations => {
-    //console.log('mutations',mutations)
     mutations.forEach(item => {
       if ("style" == item.attributeName) {
         document.body.style.padding = 0;

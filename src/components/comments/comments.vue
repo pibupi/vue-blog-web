@@ -218,7 +218,6 @@ export default {
           method: "post"
         })
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$emit("getArticleDetail");
           }

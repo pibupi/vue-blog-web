@@ -14,7 +14,7 @@ const actions = {
       const res = await sendComment(params);
       // commit();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 };
