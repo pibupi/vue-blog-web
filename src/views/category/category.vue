@@ -1,20 +1,22 @@
 <template>
-  <div class="tags-wrap">
-    <div class="split-line-wrap">
-      <i class="iconfont icon-biaoqian"></i>
-      <span class="split-title">分类</span>
-      <span class="split-line"></span>
+  <div class="cate-wrap">
+    <div class="tags-wrap">
+      <div class="split-line-wrap">
+        <i class="iconfont icon-biaoqian"></i>
+        <span class="split-title">分类</span>
+        <span class="split-line"></span>
+      </div>
+      <ul class="category-wrap">
+        <li
+          @click="getCategoryArticle(item.id)"
+          class="category-item"
+          v-for="item in category"
+          :key="item.id"
+        >
+          {{ item.category_name }}
+        </li>
+      </ul>
     </div>
-    <ul class="category-wrap">
-      <li
-        @click="getCategoryArticle(item.id)"
-        class="category-item"
-        v-for="item in category"
-        :key="item.id"
-      >
-        {{ item.category_name }}
-      </li>
-    </ul>
     <Article />
   </div>
 </template>
@@ -48,6 +50,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cate-wrap {
+  margin-bottom: 300px;
+}
 .tags-wrap {
   margin: 60px auto;
   width: 80%;

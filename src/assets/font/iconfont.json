@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "93276",
+      "name": "关于我",
+      "font_class": "guanyuwo",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
       "icon_id": "101061",
       "name": "评论",
       "font_class": "icon1",
@@ -60,6 +67,13 @@
       "font_class": "dianzan2",
       "unicode": "e60f",
       "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "1002521",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e626",
+      "unicode_decimal": 58918
     },
     {
       "icon_id": "1004631",
@@ -181,6 +195,13 @@
       "unicode_decimal": 58893
     },
     {
+      "icon_id": "5809108",
+      "name": "归档",
+      "font_class": "guidang",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
       "icon_id": "6256767",
       "name": "点赞",
       "font_class": "dianzan_active-copy",
@@ -221,6 +242,20 @@
       "font_class": "pinglun",
       "unicode": "e62a",
       "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "9307591",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
+      "icon_id": "9559033",
+      "name": "菜单",
+      "font_class": "ziyuan",
+      "unicode": "e612",
+      "unicode_decimal": 58898
     },
     {
       "icon_id": "9713061",
