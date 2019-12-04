@@ -2,7 +2,7 @@ import axios from "./index";
 // import jwtToken from "jwt-decode";
 export const getArticleList = ({ current, pageSize, keywords }) => {
   return axios.request({
-    url: "/v1/web/article/list",
+    url: "/api/v1/web/article/list",
     params: {
       current,
       pageSize,
