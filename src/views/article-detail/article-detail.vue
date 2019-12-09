@@ -52,7 +52,6 @@
 import marked from "marked";
 import hljs from "highlight.js";
 import jwtToken from "jwt-decode";
-import axios from "../../service/index";
 import { mapState, mapActions } from "vuex";
 import Comments from "@/components/comments/comments";
 // import javascript from "highlight.js/lib/languages/javascript";
@@ -210,20 +209,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .xin {
-  // float: right;
   margin-right: 30px;
   font-size: 36px;
   font-weight: bolder;
   cursor: pointer;
+  @media (max-width: 573px) {
+    font-size: 30px;
+  }
 }
 .pick {
-  // position: relative;
-  // left: 95%;
   display: flex;
   width: 100%;
   justify-content: space-between;
   overflow: hidden;
-  // display: inline-block;
   @media (max-width: 930px) {
     left: 90%;
   }
@@ -388,10 +386,12 @@ export default {
   height: 34rem;
 }
 #mark /deep/ img {
-  margin-left: 20%;
-  width: 40%;
+  max-width: 100%;
   border: 1px solid #f3f3f3;
   display: inline-block;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 }
 .title-level3 {
   display: none !important;

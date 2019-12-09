@@ -34,6 +34,7 @@ const mutations = {
 };
 const actions = {
   async getArticleListAction({ commit }, params) {
+    console.log(params);
     try {
       const {
         code,
