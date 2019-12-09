@@ -1,12 +1,18 @@
 import axios from "./index";
 // import jwtToken from "jwt-decode";
-export const getArticleList = ({ current, pageSize, keywords }) => {
+export const getArticleList = ({
+  current,
+  pageSize,
+  keywords,
+  displayName
+}) => {
   return axios.request({
     url: "/api/v1/web/article/list",
     params: {
       current,
       pageSize,
-      keywords
+      keywords,
+      username: displayName
     },
     method: "get"
   });
@@ -21,9 +27,15 @@ export const getSingArticle = ({ article_id, user_id }) => {
     method: "get"
   });
 };
-export const getCategoryArticle = category_id => {
+export const getCategoryArticle = data => {
   return axios.request({
-    url: `/api/v1/web/articleOfCategory/${category_id}`,
+    url: `/api/v1/web/articleOfCategory`,
+    params: {
+      category_id: data.category_id,
+      current: data.current,
+      pageSize: data.pageSize,
+      username: data.displayName
+    },
     method: "get"
   });
 };

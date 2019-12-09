@@ -1,152 +1,157 @@
 <template>
-  <div class="header-wrap">
-    <div class="logo-wrap">
-      <div class="logo">
-        <span>打杂的！</span>
+  <div class="top">
+    <div class="header-wrap">
+      <div class="logo-wrap">
+        <div class="logo">
+          <span>打杂的！</span>
+        </div>
       </div>
-    </div>
-    <div class="nav-right" clearfix>
-      <div class="search-wrap">
-        <input
-          placeholder="搜索文章"
-          v-model="pagination.keywords"
-          class="search-input"
-        />
-        <span
-          @click="articleSearch"
-          class="iconfont icon-sousuo2 search-btn"
-        ></span>
+      <div class="nav-right" clearfix>
+        <div class="search-wrap">
+          <input
+            placeholder="搜索文章"
+            v-model="pagination.keywords"
+            class="search-input"
+          />
+          <span
+            @click="articleSearch"
+            class="iconfont icon-sousuo2 search-btn"
+          ></span>
+        </div>
+        <ul class="nav-right-ul clearfix">
+          <li class="mouhover">
+            <router-link to="/home" tag="span">首页</router-link>
+          </li>
+          <li><router-link to="/archive" tag="span">归档</router-link></li>
+          <li><router-link to="/category" tag="span">分类</router-link></li>
+          <li><router-link to="/about" tag="span">关于</router-link></li>
+          <!-- <li><router-link to="/wall" tag="span">留言墙</router-link></li> -->
+        </ul>
+        <div class="head-btn">
+          <span v-if="!isLogin">
+            <el-button size="small" type="primary" @click="openLoginDialog"
+              >登录</el-button
+            >
+            <el-button size="small" type="danger" @click="openRegisDialog"
+              >注册</el-button
+            >
+          </span>
+          <span v-else>
+            <el-button
+              size="small"
+              @click="logOut"
+              style="marginTop:6px;"
+              class="logbtn"
+              >退出登录</el-button
+            >
+            <el-avatar
+              class="avatar"
+              size="large"
+              style="marginLeft:10px;position:absolute;fontSize:12px;"
+              >{{ displayName }}</el-avatar
+            >
+          </span>
+        </div>
       </div>
-      <ul class="nav-right-ul clearfix">
-        <li class="mouhover">
-          <router-link to="/home" tag="span">首页</router-link>
-        </li>
-        <li><router-link to="/archive" tag="span">归档</router-link></li>
-        <li><router-link to="/category" tag="span">分类</router-link></li>
-        <li><router-link to="/about" tag="span">关于</router-link></li>
-        <!-- <li><router-link to="/wall" tag="span">留言墙</router-link></li> -->
-      </ul>
-      <div class="head-btn">
-        <span v-if="!isLogin">
-          <el-button size="small" type="primary" @click="openLoginDialog"
-            >登录</el-button
+      <i class="iconfont icon-ziyuan menu" @click="showMenu"></i>
+      <div class="small-nav-right" v-if="showmenu">
+        <ul class="small-nav-right-ul">
+          <li class="mouhover" @click="navClick('/home')">
+            <i class="iconfont icon-shouye"></i><span>首页</span>
+          </li>
+          <li @click="navClick('/archive')">
+            <i class="iconfont icon-guidang"></i><span>归档</span>
+          </li>
+          <li @click="navClick('/category')">
+            <i class="iconfont icon-leimupinleifenleileibie"></i
+            ><span>分类</span>
+          </li>
+          <li @click="navClick('/about')">
+            <i class="iconfont icon-guanyuwo"></i><span>关于</span>
+          </li>
+          <!-- <li><router-link to="/wall" tag="span">留言墙</router-link></li> -->
+        </ul>
+      </div>
+      <el-dialog
+        :title="title"
+        :visible.sync="dialogFormVisible"
+        style="width:800px;margin:0 auto;"
+        @close="closeDialog"
+        :modal-append-to-body="false"
+      >
+        <el-form
+          :rules="rules"
+          :model="registForm"
+          style="width:400px;"
+          ref="registForm"
+          size="mini"
+        >
+          <el-form-item
+            label="用户名"
+            :label-width="formLabelWidth"
+            prop="username"
           >
-          <el-button size="small" type="danger" @click="openRegisDialog"
-            >注册</el-button
+            <el-input
+              class="regis-form"
+              v-model="registForm.username"
+              autocomplete="off"
+              ref="userInput"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="昵称"
+            :label-width="formLabelWidth"
+            v-if="login === 'register'"
+            prop="displayName"
           >
-        </span>
-        <span v-else>
+            <el-input
+              class="regis-form"
+              v-model="registForm.displayName"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="密码"
+            :label-width="formLabelWidth"
+            prop="password"
+          >
+            <el-input
+              class="regis-form"
+              v-model="registForm.password"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="确认密码"
+            :label-width="formLabelWidth"
+            v-if="login === 'register'"
+            prop="password2"
+          >
+            <el-input
+              class="regis-form"
+              v-model="registForm.password2"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-button
+            type="primary"
+            size="small"
+            style="width:90%"
+            @click="registConfirm"
+            >{{ login === "login" ? "login" : "register" }}</el-button
+          >
           <el-button
             size="small"
-            @click="logOut"
-            style="marginTop:6px;"
-            class="logbtn"
-            >退出登录</el-button
+            style="width:90%;marginTop:10px;marginLeft:0;"
+            @click="githublogin"
+            v-if="login === 'login'"
           >
-          <el-avatar
-            class="avatar"
-            size="large"
-            style="marginLeft:10px;position:absolute;fontSize:12px;"
-            >{{ displayName }}</el-avatar
-          >
-        </span>
-      </div>
+            <i class="iconfont icon-github" style="fontSize:16px;"></i>
+            github login
+          </el-button>
+        </el-form>
+      </el-dialog>
     </div>
-    <i class="iconfont icon-ziyuan menu" @click="showMenu"></i>
-    <div class="small-nav-right" v-if="showmenu">
-      <ul class="small-nav-right-ul">
-        <li class="mouhover" @click="navClick('/home')">
-          <i class="iconfont icon-shouye"></i><span>首页</span>
-        </li>
-        <li @click="navClick('/archive')">
-          <i class="iconfont icon-guidang"></i><span>归档</span>
-        </li>
-        <li @click="navClick('/category')">
-          <i class="iconfont icon-leimupinleifenleileibie"></i><span>分类</span>
-        </li>
-        <li @click="navClick('/about')">
-          <i class="iconfont icon-guanyuwo"></i><span>关于</span>
-        </li>
-        <!-- <li><router-link to="/wall" tag="span">留言墙</router-link></li> -->
-      </ul>
-    </div>
-    <el-dialog
-      :title="title"
-      :visible.sync="dialogFormVisible"
-      style="width:800px;margin:0 auto;"
-      @close="closeDialog"
-    >
-      <el-form
-        :rules="rules"
-        :model="registForm"
-        style="width:400px;"
-        ref="registForm"
-        size="mini"
-      >
-        <el-form-item
-          label="用户名"
-          :label-width="formLabelWidth"
-          prop="username"
-        >
-          <el-input
-            class="regis-form"
-            v-model="registForm.username"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item
-          label="昵称"
-          :label-width="formLabelWidth"
-          v-if="login === 'register'"
-          prop="displayName"
-        >
-          <el-input
-            class="regis-form"
-            v-model="registForm.displayName"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item
-          label="密码"
-          :label-width="formLabelWidth"
-          prop="password"
-        >
-          <el-input
-            class="regis-form"
-            v-model="registForm.password"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item
-          label="确认密码"
-          :label-width="formLabelWidth"
-          v-if="login === 'register'"
-          prop="password2"
-        >
-          <el-input
-            class="regis-form"
-            v-model="registForm.password2"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-button
-          type="primary"
-          size="small"
-          style="width:90%"
-          @click="registConfirm"
-          >{{ login === "login" ? "login" : "register" }}</el-button
-        >
-        <el-button
-          size="small"
-          style="width:90%;marginTop:10px;marginLeft:0;"
-          @click="githublogin"
-          v-if="login === 'login'"
-        >
-          <i class="iconfont icon-github" style="fontSize:16px;"></i>
-          github login
-        </el-button>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -228,6 +233,7 @@ export default {
       const preUrl = `${window.location.pathname}${window.location.search}`;
       sessionStorage.setItem("preUrl", preUrl);
       window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://localhost:5001/api/v1/oauth/redirect`;
+      // window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://39.105.218.164:5001/api/v1/oauth/redirect`;
     },
     // 退出登录
     logOut() {
@@ -247,17 +253,24 @@ export default {
       this.title = "regist";
       this.login = "register";
       this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["userInput"].focus();
+      });
     },
     openLoginDialog() {
       this.login = "login";
       this.title = "login";
       this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["userInput"].focus();
+      });
     },
     closeDialog() {
       this.registForm.username = "";
       this.registForm.password = "";
       this.registForm.password2 = "";
       this.registForm.displayName = "";
+      this.$refs["userInput"].blur();
     },
     resetForm(registForm) {
       this.$refs[registForm].resetFields();
@@ -320,13 +333,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.top {
+  position: fixed;
+  top: 0;
+  right: 4px;
+  left: 0;
+  z-index: 100;
+  background-color: #fff;
+}
 .header-wrap {
   height: 40px;
   display: flex;
   justify-content: space-between;
   padding: 20px 10% 20px 10%;
   margin-bottom: 60px;
-  box-shadow: 2px 4px 6px #f0f1f2;
+  box-shadow: -1px 4px 6px #f0f1f2;
   position: relative;
   @media (max-width: 575px) {
     height: 30px;

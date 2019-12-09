@@ -19,6 +19,7 @@ import {
 import App from "./App.vue";
 // import "./registerServiceWorker";
 import moment from "moment";
+import VueRouter from "vue-router";
 import router from "./router";
 import store from "./store";
 import animated from "animate.css";
@@ -27,6 +28,11 @@ import "./assets/font/iconfont.css";
 Vue.filter("dateformat", function(dataStr, pattern = "YYYY-MM-DD") {
   return moment(dataStr).format(pattern);
 });
+// 解决移动端重复点击路由报错
+const routerPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error);
+};
 Vue.use(animated);
 Vue.use(Input)
   .use(Button)

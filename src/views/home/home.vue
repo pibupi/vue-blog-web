@@ -27,18 +27,27 @@ export default {
   computed: {
     ...mapState({
       count: state => state.article.count,
-      pagination: state => state.article.pagination
+      pagination: state => state.article.pagination,
+      displayName: state => state.login.displayName
     })
   },
   created() {
-    this.getArticleListAction(this.pagination);
+    let params = {
+      ...this.pagination,
+      displayName: this.displayName
+    };
+    this.getArticleListAction(params);
   },
   methods: {
     ...mapActions(["getArticleListAction"]),
     ...mapMutations(["CHANGE_CURRENT"]),
     handleCurrentChange(val) {
       this.$store.commit("CHANGE_CURRENT", val);
-      this.getArticleListAction(this.pagination);
+      let params = {
+        ...this.pagination,
+        displayName: this.displayName
+      };
+      this.getArticleListAction(params);
     }
   }
 };

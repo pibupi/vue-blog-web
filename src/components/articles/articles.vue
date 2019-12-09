@@ -87,18 +87,27 @@ export default {
       }
       .article-card {
         width: 100%;
-        padding-right: 30px;
+        // padding-right: 30px;
         &:hover {
           background-color: #effbff;
         }
         .article-img-wrap {
+          margin-left: 8%;
+          @media (max-width: 930px) {
+            display: none;
+          }
           .article-img {
-            margin-left: 8%;
             height: 100%;
             width: 300px;
             border-radius: 10px;
-            @media (max-width: 930px) {
-              display: none;
+            @media (max-width: 1140px) {
+              width: 260px;
+            }
+            @media (max-width: 1168px) {
+              width: 240px;
+            }
+            img {
+              width: 100%;
             }
           }
         }
@@ -112,20 +121,26 @@ export default {
             margin-left: 0;
             width: 90%;
           }
+          @media (max-width: 320px) {
+            width: 100%;
+          }
           .article-title {
             font-size: 20px;
             font-weight: bolder;
             cursor: pointer;
             @media (max-width: 930px) {
-              font-size: 26px;
+              font-size: 18px;
             }
             @media (max-width: 575px) {
-              font-size: 18px;
+              font-size: 16px;
             }
           }
           .article-desc {
             margin-top: 30px;
             color: #666;
+            @media (max-width: 1140px) {
+              font-size: 14px;
+            }
             @media (max-width: 930px) {
               font-size: 12px;
             }
@@ -145,7 +160,7 @@ export default {
               justify-content: space-between;
               .article-bottom-right {
                 span {
-                  margin-right: 10px;
+                  margin-right: 4px;
                   display: inline-block;
                 }
               }
@@ -164,5 +179,11 @@ export default {
 }
 .icon-xinxi:before {
   font-size: 14px;
+}
+.article-list-item /deep/ .el-card__body {
+  // width: 100%;
+  @media (max-width: 320px) {
+    padding: 8px;
+  }
 }
 </style>
