@@ -4,7 +4,7 @@ const state = {
   articleList: [],
   pagination: {
     current: 1,
-    pageSize: 10,
+    pageSize: 2,
     keywords: ""
   },
   count: null
@@ -34,7 +34,6 @@ const mutations = {
 };
 const actions = {
   async getArticleListAction({ commit }, params) {
-    console.log(params);
     try {
       const {
         code,

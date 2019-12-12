@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import { getCategoryArticle } from "../../service/article";
+import { getCategoryArticleService } from "../../service/article";
 import { mapState, mapActions } from "vuex";
 import Article from "@/components/articles/articles";
 export default {
@@ -58,7 +58,7 @@ export default {
       category_id: null,
       pagination: {
         current: 1,
-        pageSize: 10
+        pageSize: 2
       }
     };
   },
@@ -83,9 +83,9 @@ export default {
       let params = {
         category_id,
         ...this.pagination,
-        displayName
+        displayName: this.displayName
       };
-      getCategoryArticle(params).then(res => {
+      getCategoryArticleService(params).then(res => {
         this.articleList = res.data.rows;
         this.count = res.data.count;
       });
@@ -95,7 +95,15 @@ export default {
     },
     handleCurrentChange(val) {
       this.pagination.current = val;
-      getCategoryArticle(this.category_id, this.pagination);
+      let params = {
+        category_id: this.category_id,
+        ...this.pagination,
+        displayName: this.displayName
+      };
+      getCategoryArticleService(params).then(res => {
+        this.articleList = res.data.rows;
+        this.count = res.data.count;
+      });
     }
   }
 };

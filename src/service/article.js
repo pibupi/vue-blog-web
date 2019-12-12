@@ -27,7 +27,7 @@ export const getSingArticle = ({ article_id, user_id }) => {
     method: "get"
   });
 };
-export const getCategoryArticle = data => {
+export const getCategoryArticleService = data => {
   return axios.request({
     url: `/api/v1/web/articleOfCategory`,
     params: {
