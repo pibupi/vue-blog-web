@@ -34,20 +34,30 @@ export default {
     };
   },
   created() {
-    this.getArticleListAction(this.pagination);
+    this.$store.commit("CHANGE_CURRENT", 1);
+    let data = {
+      ...this.pagination,
+      displayName: this.displayName
+    };
+    this.getArticleListAction(data);
   },
   computed: {
     ...mapGetters(["articleList"]),
     ...mapState({
       count: state => state.article.count,
-      pagination: state => state.article.pagination
+      pagination: state => state.article.pagination,
+      displayName: state => state.login.displayName
     })
   },
   methods: {
     ...mapActions(["getArticleListAction"]),
     handleCurrentChange(val) {
       this.pagination.current = val;
-      this.getArticleListAction(this.pagination);
+      let data = {
+        ...this.pagination,
+        displayName: this.displayName
+      };
+      this.getArticleListAction(data);
     },
     toArticleDetail(id) {
       this.$router.push({ name: "articleDetail", query: { id } });

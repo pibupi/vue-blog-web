@@ -32,6 +32,7 @@ export default {
     })
   },
   created() {
+    this.$store.commit("CHANGE_CURRENT", 1);
     let params = {
       ...this.pagination,
       displayName: this.displayName

@@ -232,8 +232,8 @@ export default {
     githublogin() {
       const preUrl = `${window.location.pathname}${window.location.search}`;
       sessionStorage.setItem("preUrl", preUrl);
-      window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://localhost:5001/api/v1/oauth/redirect`;
-      // window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://39.105.218.164:5001/api/v1/oauth/redirect`;
+      // window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://localhost:5001/api/v1/oauth/redirect`;
+      window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://111.229.228.223:5001/api/v1/oauth/redirect`;
     },
     // 退出登录
     logOut() {
