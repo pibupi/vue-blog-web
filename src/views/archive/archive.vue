@@ -19,6 +19,7 @@
         :page-size="pagination.pageSize"
         layout="total, prev, pager, next"
         :total="count"
+        small
       >
       </el-pagination>
     </div>
@@ -92,5 +93,13 @@ w
   .el-timeline-item__node--normal
   .el-timeline-item__node-- {
   color: #1890ff;
+}
+.pagination-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  @media (max-width: 575px) {
+    justify-content: center;
+  }
 }
 </style>

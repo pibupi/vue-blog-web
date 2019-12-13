@@ -9,6 +9,8 @@
         :page-size="pagination.pageSize"
         layout="total, prev, pager, next"
         :total="count"
+        small
+        :page-count="5"
       >
       </el-pagination>
     </div>
@@ -55,10 +57,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home-wrap {
-  margin-bottom: 200px;
+  // margin-bottom: 200px;
 }
 .pagination-wrap {
-  width: 0;
+  width: 100%;
   margin: 30px auto;
+  display: flex;
+  justify-content: center;
+}
+.pagination-wrap /deep/ .el-pager li {
+  // min-width: 5px;
 }
 </style>
