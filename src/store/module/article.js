@@ -4,7 +4,7 @@ const state = {
   articleList: [],
   pagination: {
     current: 1,
-    pageSize: 2,
+    pageSize: 1,
     keywords: ""
   },
   count: null

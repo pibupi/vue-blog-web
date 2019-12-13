@@ -27,6 +27,10 @@ export default {
 }
 .wrap {
   padding-top: 140px;
+  // margin-bottom: 300px;
+  @media (max-width: 575px) {
+    padding-top: 60px;
+  }
 }
 .fade-transform-leave-active,
 .fade-transform-enter-active {
