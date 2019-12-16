@@ -51,11 +51,11 @@
 <script>
 import marked from "marked";
 import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css";
 import jwtToken from "jwt-decode";
 import { mapState, mapActions } from "vuex";
 import Comments from "@/components/comments/comments";
 // import javascript from "highlight.js/lib/languages/javascript";
-import "highlight.js/styles/monokai-sublime.css";
 import { Message } from "element-ui";
 import { clickLikeArticle, getSingArticle } from "../../service/article";
 import { translateMarkdown } from "../../lib/markdown";
@@ -95,16 +95,17 @@ export default {
       marked.setOptions({
         renderer: new marked.Renderer(),
         highlight: function(code) {
-          return hljs.highlightAuto(code).value;
+          // 如何让代码高亮
+          return hljs.highlightAuto(code).value; // 自动检测
         },
-        pedantic: false,
-        gfm: true,
-        tables: true,
-        breaks: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-        xhtml: false
+        pedantic: false, // 容错，如为false会把不符合markdown的也改正一下渲染
+        gfm: true, // 启动类似github样式的markdown
+        tables: true, // 表格输出为github的样式
+        breaks: false, // github的换行符
+        sanitize: false, // 原始输出忽略html标签，false为不忽略，如iframe,视频
+        smartLists: true // 自动渲染列表
+        // smartypants: false,
+        // xhtml: false
       });
       this.code = marked(this.code);
     },
@@ -249,6 +250,8 @@ export default {
   width: 70%;
   margin: 0 auto;
   overflow: hidden;
+  padding: 1.3rem;
+  font-size: 1rem;
   @media (max-width: 930px) {
     width: 80%;
   }
@@ -262,6 +265,7 @@ export default {
   background-color: #e1f0ff;
 }
 .detailed-title {
+  font-size: 1.8rem;
   text-align: center;
   padding: 1rem;
   .detail-head-title {
@@ -322,8 +326,14 @@ export default {
   line-height: 1.7em;
 }
 #mark /deep/ ol li {
-  font-size: 1rem;
-  line-height: 1.5em;
+  list-style: circle;
+  margin-left: 3%;
+  font-size: 14px;
+  line-height: 1.7em;
+}
+#mark /deep/ a {
+  font-size: 12px;
+  color: #1890ff;
 }
 #mark /deep/ pre {
   display: block;
@@ -382,6 +392,7 @@ export default {
 .article-menu {
   font-size: 12px;
 }
+
 #mark /deep/ iframe {
   height: 34rem;
 }
@@ -401,5 +412,11 @@ export default {
 }
 .ant-anchor-wrapper {
   padding: 5px !important;
+}
+#mark /deep/ ul {
+  list-style: circle;
+  margin-left: 3%;
+  font-size: 14px;
+  line-height: 1.7em;
 }
 </style>
