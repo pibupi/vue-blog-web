@@ -353,15 +353,12 @@ export default {
   font-family: consolas, Menlo, PingFang SC, Microsoft YaHei, monospace !important;
 }
 #mark /deep/ code {
-  display: inline-block;
-  background-color: #f3f3f3;
-  border: 1px solid #fdb9cc;
+  padding: 2px 4px;
+  word-wrap: break-word;
+  color: #ff502c;
+  background: #fff5f5;
   border-radius: 3px;
-  font-size: 14px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #4f4f4f;
-  margin: 0px 3px;
+  font-size: 13px;
 }
 #mark /deep/ pre > code .hljs-string {
   color: #50a14f;

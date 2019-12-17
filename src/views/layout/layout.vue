@@ -5,7 +5,7 @@
       <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
       </transition>
-      <el-backtop target=".wrap"></el-backtop>
+      <el-backtop target=".layout"></el-backtop>
     </div>
   </div>
 </template>
