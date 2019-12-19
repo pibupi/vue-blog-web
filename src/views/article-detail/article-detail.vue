@@ -323,7 +323,7 @@ export default {
 #mark /deep/ p {
   font-family: Lato, PingFang, SC, Microsoft YaHei, sans-serif !important;
   font-size: 14px;
-  line-height: 1.7em;
+  line-height: 2em;
 }
 #mark /deep/ ol li {
   list-style: circle;
@@ -410,10 +410,16 @@ export default {
 .ant-anchor-wrapper {
   padding: 5px !important;
 }
-#mark /deep/ ul {
+#mark /deep/ ul li{
   list-style: circle;
   margin-left: 3%;
   font-size: 14px;
-  line-height: 1.7em;
+  line-height: 2em;
+}
+#mark /deep/ .hljs-title{
+  color:#a6e22e;
+}
+#mark /deep/ .hljs-params{
+  color:#ff502c;
 }
 </style>
