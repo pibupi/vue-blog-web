@@ -38,7 +38,7 @@
                           item.like_count
                         }}</span>
                       </span>
-                      {{ item.createdAt | dateformat("YYYY-MM-DD") }}
+                      {{ item.createdAt | dateformat('YYYY-MM-DD') }}
                     </p>
                   </div>
                 </div>
@@ -54,9 +54,9 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 export default {
-  name: "article-list",
+  name: 'article-list',
   computed: {
     ...mapState({
       articleList: state => state.article.articleList,
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     toSingleArticle(id) {
-      this.$router.push({ name: "articleDetail", query: { id } });
+      this.$router.push({ name: 'articleDetail', query: { id } });
     }
   }
 };

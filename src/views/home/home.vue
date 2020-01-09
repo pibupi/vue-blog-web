@@ -17,11 +17,11 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from 'vuex';
 // import Swiper from "@/components/swiper/swiper.vue";
-import Article from "@/components/articles/articles.vue";
+import Article from '@/components/articles/articles.vue';
 export default {
-  name: "home",
+  name: 'home',
   components: {
     // Swiper,
     Article
@@ -34,7 +34,7 @@ export default {
     })
   },
   created() {
-    this.$store.commit("CHANGE_CURRENT", 1);
+    this.$store.commit('CHANGE_CURRENT', 1);
     let params = {
       ...this.pagination,
       displayName: this.displayName
@@ -42,10 +42,10 @@ export default {
     this.getArticleListAction(params);
   },
   methods: {
-    ...mapActions(["getArticleListAction"]),
-    ...mapMutations(["CHANGE_CURRENT"]),
+    ...mapActions(['getArticleListAction']),
+    ...mapMutations(['CHANGE_CURRENT']),
     handleCurrentChange(val) {
-      this.$store.commit("CHANGE_CURRENT", val);
+      this.$store.commit('CHANGE_CURRENT', val);
       let params = {
         ...this.pagination,
         displayName: this.displayName
@@ -56,16 +56,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.home-wrap {
-  // margin-bottom: 200px;
-}
 .pagination-wrap {
   width: 100%;
   margin: 30px auto;
   display: flex;
   justify-content: center;
-}
-.pagination-wrap /deep/ .el-pager li {
-  // min-width: 5px;
 }
 </style>

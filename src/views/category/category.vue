@@ -25,7 +25,7 @@
           :key="index"
           :color="item.color"
         >
-          <span class="time"> {{ item.createdAt.split(" ")[0] }}</span>
+          <span class="time"> {{ item.createdAt.split(' ')[0] }}</span>
           <span class="title" @click="toArticleDetail(item.id)">{{
             item.title
           }}</span>
@@ -46,11 +46,11 @@
   </div>
 </template>
 <script>
-import { getCategoryArticleService } from "../../service/article";
-import { mapState, mapActions } from "vuex";
-import Article from "@/components/articles/articles";
+import { getCategoryArticleService } from '../../service/article';
+import { mapState, mapActions } from 'vuex';
+import Article from '@/components/articles/articles';
 export default {
-  name: "category",
+  name: 'category',
   data() {
     return {
       reverse: true,
@@ -78,7 +78,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getCategoryAction", "clearArticleListAction"]),
+    ...mapActions(['getCategoryAction', 'clearArticleListAction']),
     getCategoryArticle(category_id, displayName) {
       this.category_id = category_id;
       let params = {
@@ -92,7 +92,7 @@ export default {
       });
     },
     toArticleDetail(id) {
-      this.$router.push({ name: "articleDetail", query: { id } });
+      this.$router.push({ name: 'articleDetail', query: { id } });
     },
     handleCurrentChange(val) {
       this.pagination.current = val;
@@ -110,9 +110,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.cate-wrap {
-  // margin-bottom: 300px;
-}
 .tags-wrap {
   margin: 60px auto;
   width: 80%;
@@ -130,7 +127,7 @@ export default {
       width: 100%;
       &:before {
         display: inline-block;
-        content: "";
+        content: '';
         position: absolute;
         top: 10px;
         right: 0;

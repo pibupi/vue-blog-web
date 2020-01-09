@@ -9,7 +9,7 @@
         <span class="detail-author">{{ article.author }}</span>
         <span class="detail-line"></span>
         <span class="detail-time">
-          {{ article.createdAt | dateformat("YYYY-MM-DD") }}
+          {{ article.createdAt | dateformat('YYYY-MM-DD') }}
         </span>
         <span class="detail-line"></span>
         <i class="iconfont icon-biaoqian" style="marginLeft:10px;"
@@ -49,25 +49,25 @@
   </div>
 </template>
 <script>
-import marked from "marked";
-import hljs from "highlight.js";
-import "highlight.js/styles/monokai-sublime.css";
-import jwtToken from "jwt-decode";
-import { mapState, mapActions } from "vuex";
-import Comments from "@/components/comments/comments";
+import marked from 'marked';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai-sublime.css';
+import jwtToken from 'jwt-decode';
+import { mapState, mapActions } from 'vuex';
+import Comments from '@/components/comments/comments';
 // import javascript from "highlight.js/lib/languages/javascript";
-import { Message } from "element-ui";
-import { clickLikeArticle, getSingArticle } from "../../service/article";
-import { translateMarkdown } from "../../lib/markdown";
+import { Message } from 'element-ui';
+import { clickLikeArticle, getSingArticle } from '../../service/article';
+import { translateMarkdown } from '../../lib/markdown';
 export default {
   data() {
     return {
       // code: "# 标题\n```javascript\nfunction(){\n\tconsole.log(123)\n}\n```", 测试markdown数据
-      code: "",
+      code: '',
       article: {},
       count: 0,
       like_status: 0,
-      likeClass: "xin",
+      likeClass: 'xin',
       comments: [],
       replyLikeStatus: [],
       replyLikeCommentStatus: [],
@@ -90,7 +90,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["sendCommentAction", "getCommentAction"]),
+    ...mapActions(['sendCommentAction', 'getCommentAction']),
     initMarkDown() {
       marked.setOptions({
         renderer: new marked.Renderer(),
@@ -116,7 +116,7 @@ export default {
         this.getArticleDetail();
       } else {
         Message.warning({
-          message: "评论内容不能为空"
+          message: '评论内容不能为空'
         });
       }
     },
@@ -124,18 +124,18 @@ export default {
     async likeClick() {
       if (!this.isLogin) {
         Message.warning({
-          message: "登陆后即可点赞"
+          message: '登陆后即可点赞'
         });
         return;
       }
-      const decoded = jwtToken(sessionStorage.getItem("token"));
+      const decoded = jwtToken(sessionStorage.getItem('token'));
       let params = {
         article_id: this.$route.query.id,
         user_id: decoded.id
       };
       let { code, msg } = await clickLikeArticle(params);
       if (code === 0) {
-        this.likeClass = "xin click";
+        this.likeClass = 'xin click';
         this.count += 1;
         Message.warning({
           message: msg
@@ -150,12 +150,12 @@ export default {
     // 获取文章详情
     async getArticleDetail() {
       let decoded = null;
-      if (sessionStorage.getItem("token")) {
-        decoded = jwtToken(sessionStorage.getItem("token"));
+      if (sessionStorage.getItem('token')) {
+        decoded = jwtToken(sessionStorage.getItem('token'));
       }
       let data = {
         article_id: this.$route.query.id,
-        user_id: decoded ? decoded.id : ""
+        user_id: decoded ? decoded.id : ''
       };
       let {
         data: {
@@ -175,26 +175,26 @@ export default {
       this.count = like_count;
       this.like_status = like_status;
       if (this.like_status > 0) {
-        this.likeClass = "xin click";
+        this.likeClass = 'xin click';
       }
       // 动态添加额外需要的属性，这样才会其效果
       comments.forEach((item, index) => {
-        this.$set(item, "toggleAnswer", false);
+        this.$set(item, 'toggleAnswer', false);
         comments[index].toggleAnswer = false;
         replyLikeCommentStatus.forEach(likeItem => {
           if (likeItem.comment_id == item.id) {
-            this.$set(item, "reply_like_status", true);
+            this.$set(item, 'reply_like_status', true);
             comments[index].reply_like_status = true;
           }
         });
-        this.$set(item, "children", []);
+        this.$set(item, 'children', []);
         answerComments.forEach((child, index) => {
           if (item.id == child.parent_id) {
-            this.$set(child, "toggleAnswer", false);
+            this.$set(child, 'toggleAnswer', false);
             answerComments[index].toggleAnswer = false;
             replyLikeAnswerStatus.forEach(likeItem => {
               if (likeItem.answer_id == child.id) {
-                this.$set(child, "reply_like_status", true);
+                this.$set(child, 'reply_like_status', true);
                 answerComments[index].reply_like_status = true;
               }
             });
@@ -289,7 +289,7 @@ export default {
     .detail-line {
       &:before {
         display: inline-block;
-        content: "";
+        content: '';
         width: 1px;
         height: 10px;
         background-color: #e8e8e8;
@@ -410,16 +410,16 @@ export default {
 .ant-anchor-wrapper {
   padding: 5px !important;
 }
-#mark /deep/ ul li{
+#mark /deep/ ul li {
   list-style: circle;
   margin-left: 3%;
   font-size: 14px;
   line-height: 2em;
 }
-#mark /deep/ .hljs-title{
-  color:#a6e22e;
+#mark /deep/ .hljs-title {
+  color: #a6e22e;
 }
-#mark /deep/ .hljs-params{
-  color:#ff502c;
+#mark /deep/ .hljs-params {
+  color: #ff502c;
 }
 </style>

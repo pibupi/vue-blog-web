@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from 'vue';
 import {
   Button,
   Input,
@@ -15,17 +15,17 @@ import {
   Icon,
   Image,
   Avatar
-} from "element-ui";
-import App from "./App.vue";
+} from 'element-ui';
+import App from './App.vue';
 // import "./registerServiceWorker";
-import moment from "moment";
-import VueRouter from "vue-router";
-import router from "./router";
-import store from "./store";
-import animated from "animate.css";
-import "./assets/scss/reset.scss";
-import "./assets/font/iconfont.css";
-Vue.filter("dateformat", function(dataStr, pattern = "YYYY-MM-DD") {
+import moment from 'moment';
+import VueRouter from 'vue-router';
+import router from './router';
+import store from './store';
+import animated from 'animate.css';
+import './assets/scss/reset.scss';
+import './assets/font/iconfont.css';
+Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD') {
   return moment(dataStr).format(pattern);
 });
 // 解决移动端重复点击路由报错
@@ -59,7 +59,7 @@ function handlePadding() {
 
   let observer = new MutationObserver(mutations => {
     mutations.forEach(item => {
-      if ("style" == item.attributeName) {
+      if ('style' == item.attributeName) {
         document.body.style.padding = 0;
       }
     });
@@ -78,4 +78,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app');

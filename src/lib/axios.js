@@ -1,6 +1,6 @@
-import axios from "axios";
-import { baseURL } from "@/config";
-import { Loading } from "element-ui";
+import axios from 'axios';
+import { baseURL } from '@/config';
+import { Loading } from 'element-ui';
 class HttpRequest {
   constructor(baseUrl = baseURL) {
     this.baseUrl = baseUrl;
@@ -24,14 +24,14 @@ class HttpRequest {
   interceptors(instance, url) {
     instance.interceptors.request.use(
       config => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         // 添加全局的loading...
         if (!Object.keys(this.queue).length) {
           // Spin.show()
         }
         this.queue[url] = true;
         if (token) {
-          config.headers.common["Authorization"] = "Bearer " + token;
+          config.headers.common['Authorization'] = 'Bearer ' + token;
         }
         return config;
       },

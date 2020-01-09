@@ -138,7 +138,7 @@
             size="small"
             style="width:90%"
             @click="registConfirm"
-            >{{ login === "login" ? "login" : "register" }}</el-button
+            >{{ login === 'login' ? 'login' : 'register' }}</el-button
           >
           <el-button
             size="small"
@@ -155,35 +155,35 @@
   </div>
 </template>
 <script>
-import "@/assets/scss/public.scss";
-import axios from "../../service";
-import { mapState, mapActions, mapMutations } from "vuex";
-import { register, login } from "../../service/regist";
-import { Message } from "element-ui";
+import '@/assets/scss/public.scss';
+import axios from '../../service';
+import { mapState, mapActions, mapMutations } from 'vuex';
+import { register, login } from '../../service/regist';
+import { Message } from 'element-ui';
 export default {
   data() {
     return {
       dialogFormVisible: false,
-      formLabelWidth: "80px",
-      login: "register",
-      title: "login",
+      formLabelWidth: '80px',
+      login: 'register',
+      title: 'login',
       showmenu: false,
       registForm: {
-        username: "",
-        displayName: "",
+        username: '',
+        displayName: '',
         password: null,
         password2: null
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         displayName: [
-          { required: true, message: "请输入昵称", trigger: "blur" }
+          { required: true, message: '请输入昵称', trigger: 'blur' }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [
-          { required: true, message: "请输入确认密码", trigger: "blur" }
+          { required: true, message: '请输入确认密码', trigger: 'blur' }
         ]
       }
     };
@@ -197,30 +197,30 @@ export default {
   },
   created() {
     // 获取github授权后的用户信息
-    const username = window.location.search.split("=");
+    const username = window.location.search.split('=');
     let userinfo = {
       username: username[1],
       password: username[1]
     };
-    if (userinfo.username && username[0].split("?")[1] === "name") {
+    if (userinfo.username && username[0].split('?')[1] === 'name') {
       login(userinfo).then(res => {
-        this.$store.commit("LOGIN_SUCCESS", res);
+        this.$store.commit('LOGIN_SUCCESS', res);
         Message.success({
-          message: "登录成功"
+          message: '登录成功'
         });
-        let preUrl = sessionStorage.getItem("preUrl");
+        let preUrl = sessionStorage.getItem('preUrl');
         this.$router.replace(preUrl);
       });
     }
   },
   mounted() {
-    document.getElementById("wrap").addEventListener("click", () => {
+    document.getElementById('wrap').addEventListener('click', () => {
       this.showmenu = false;
     });
   },
   methods: {
-    ...mapActions(["getArticleListAction", "logout"]),
-    ...mapMutations(["LOGIN_SUCCESS"]),
+    ...mapActions(['getArticleListAction', 'logout']),
+    ...mapMutations(['LOGIN_SUCCESS']),
     navClick(path) {
       this.$router.push(path);
       this.showmenu = false;
@@ -231,18 +231,19 @@ export default {
     // 跳转到github
     githublogin() {
       const preUrl = `${window.location.pathname}${window.location.search}`;
-      sessionStorage.setItem("preUrl", preUrl);
+      sessionStorage.setItem('preUrl', preUrl);
       // window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://localhost:5001/api/v1/oauth/redirect`;
-      window.location.href = `https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://111.229.228.223:5001/api/v1/oauth/redirect`;
+      window.location.href =
+        'https://github.com/login/oauth/authorize?client_id=eb12a53881547ca7c69f&redirect_uri=http://111.229.228.223:5001/api/v1/oauth/redirect';
     },
     // 退出登录
     logOut() {
       this.logout();
       Message.success({
-        message: "成功退出登录"
+        message: '成功退出登录'
       });
-      if (this.$route.path !== "/home") {
-        this.$router.replace({ name: "home" });
+      if (this.$route.path !== '/home') {
+        this.$router.replace({ name: 'home' });
       }
     },
     // 搜索
@@ -250,42 +251,42 @@ export default {
       this.getArticleListAction(this.pagination);
     },
     openRegisDialog() {
-      this.title = "regist";
-      this.login = "register";
+      this.title = 'regist';
+      this.login = 'register';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs["userInput"].focus();
+        this.$refs['userInput'].focus();
       });
     },
     openLoginDialog() {
-      this.login = "login";
-      this.title = "login";
+      this.login = 'login';
+      this.title = 'login';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs["userInput"].focus();
+        this.$refs['userInput'].focus();
       });
     },
     closeDialog() {
-      this.registForm.username = "";
-      this.registForm.password = "";
-      this.registForm.password2 = "";
-      this.registForm.displayName = "";
-      this.$refs["userInput"].blur();
+      this.registForm.username = '';
+      this.registForm.password = '';
+      this.registForm.password2 = '';
+      this.registForm.displayName = '';
+      this.$refs['userInput'].blur();
     },
     resetForm(registForm) {
       this.$refs[registForm].resetFields();
       this.dialogFormVisible = false;
-      this.registForm.username = "";
-      this.registForm.password = "";
-      this.registForm.password2 = "";
-      this.registForm.displayName = "";
+      this.registForm.username = '';
+      this.registForm.password = '';
+      this.registForm.password2 = '';
+      this.registForm.displayName = '';
     },
     // 提交注册登录表单
     registConfirm() {
-      if (this.login === "register") {
+      if (this.login === 'register') {
         if (this.registForm.password !== this.registForm.password2) {
           Message.warning({
-            message: "两次密码不一致"
+            message: '两次密码不一致'
           });
           return;
         }
@@ -306,25 +307,25 @@ export default {
             return;
           }
           this.dialogFormVisible = false;
-          this.registForm.username = "";
-          this.registForm.password = "";
-          this.registForm.password2 = "";
-          this.registForm.displayName = "";
+          this.registForm.username = '';
+          this.registForm.password = '';
+          this.registForm.password2 = '';
+          this.registForm.displayName = '';
         });
-      } else if (this.login === "login") {
+      } else if (this.login === 'login') {
         let params = {
           username: this.registForm.username,
           password: this.registForm.password
         };
         login(params).then(res => {
-          this.$store.commit("LOGIN_SUCCESS", res);
+          this.$store.commit('LOGIN_SUCCESS', res);
           this.dialogFormVisible = false;
-          this.registForm.username = "";
-          this.registForm.password = "";
-          this.registForm.password2 = "";
-          this.registForm.displayName = "";
+          this.registForm.username = '';
+          this.registForm.password = '';
+          this.registForm.password2 = '';
+          this.registForm.displayName = '';
           Message.success({
-            message: "登录成功"
+            message: '登录成功'
           });
         });
       }
@@ -426,7 +427,7 @@ export default {
         cursor: pointer;
         &:before {
           display: inline-block;
-          content: "";
+          content: '';
           height: 6px;
           width: 6px;
           border-radius: 50%;

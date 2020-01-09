@@ -1,58 +1,69 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Layout from "../views/layout/layout.vue";
-import Home from "../views/home/home.vue";
-import Category from "../views/category/category.vue";
-import About from "../views/about/about.vue";
-import ArticleDetail from "../views/article-detail/article-detail.vue";
-import Wall from "../views/wall/wall.vue";
-import Archive from "../views/archive/archive.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+// import Layout from '../views/layout/layout.vue'
+// import Home from '../views/home/home.vue'
+// import Category from '../views/category/category.vue'
+// import About from '../views/about/about.vue'
+// import ArticleDetail from '../views/article-detail/article-detail.vue'
+// import Wall from '../views/wall/wall.vue';
+// import Archive from '../views/archive/archive.vue'
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "layout",
+    path: '/',
+    name: 'layout',
     meta: { index: 0 },
-    redirect: "/home",
-    component: Layout,
+    redirect: '/home',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/layout/layout.vue'),
     children: [
       {
-        path: "home",
-        name: "home",
+        path: 'home',
+        name: 'home',
         meta: { index: 1 }, //meta对象的index用来定义当前路由的层级,由小到大,由低到高
-        component: Home
+        component: () =>
+          import(/* webpackChunkName: "about" */ '../views/home/home.vue')
       },
       {
-        path: "category",
-        name: "category",
+        path: 'category',
+        name: 'category',
         meta: { index: 1 },
-        component: Category
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ '../views/category/category.vue'
+          )
       },
       {
-        path: "about",
-        name: "about",
+        path: 'about',
+        name: 'about',
         meta: { index: 1 },
-        component: About
+        component: () =>
+          import(/* webpackChunkName: "about" */ '../views/about/about.vue')
       },
       {
-        path: "articleDetail",
-        name: "articleDetail",
+        path: 'articleDetail',
+        name: 'articleDetail',
         meta: { index: 1 },
-        component: ArticleDetail
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ '../views/article-detail/article-detail.vue'
+          )
       },
       {
-        path: "wall",
-        name: "wall",
+        path: 'wall',
+        name: 'wall',
         meta: { index: 1 },
-        component: Wall
+        component: () =>
+          import(/* webpackChunkName: "about" */ '../views/wall/wall.vue')
       },
       {
-        path: "archive",
-        name: "archive",
+        path: 'archive',
+        name: 'archive',
         meta: { index: 1 },
-        component: Archive
+        component: () =>
+          import(/* webpackChunkName: "about" */ '../views/archive/archive.vue')
       }
     ]
   }
@@ -68,7 +79,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   routes
 });
 

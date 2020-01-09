@@ -146,14 +146,14 @@
   </div>
 </template>
 <script>
-import "../../assets/scss/public.scss";
-import jwtToken from "jwt-decode";
-import { Message } from "element-ui";
-import { mapState } from "vuex";
-import { getComments, sendAnswerComment } from "../../service/comment";
-import axios from "../../service";
+import '../../assets/scss/public.scss';
+import jwtToken from 'jwt-decode';
+import { Message } from 'element-ui';
+import { mapState } from 'vuex';
+import { getComments, sendAnswerComment } from '../../service/comment';
+import axios from '../../service';
 export default {
-  name: "comment",
+  name: 'comment',
   props: {
     comments: {
       type: Array
@@ -167,12 +167,12 @@ export default {
   },
   data() {
     return {
-      commentContent: "", // 评论内容
-      answerMsg: "", // @前缀
+      commentContent: '', // 评论内容
+      answerMsg: '', // @前缀
       // answerMsgOk: [],
       parent_id: null, // 父级评论id
       answerId: null, // 回复id
-      answerDiaplayName: "", // 评论昵称
+      answerDiaplayName: '', // 评论昵称
       zanStatus: false, // 点赞状态
       // buzanStatus: false,
       zanId: null // 点赞的评论id
@@ -196,13 +196,13 @@ export default {
       });
       if (status) {
         Message.warning({
-          message: "您已点过赞！！"
+          message: '您已点过赞！！'
         });
         return;
       }
       let decoded = null;
-      if (sessionStorage.getItem("token")) {
-        decoded = jwtToken(sessionStorage.getItem("token"));
+      if (sessionStorage.getItem('token')) {
+        decoded = jwtToken(sessionStorage.getItem('token'));
       }
       let params = {
         user_id: decoded.id,
@@ -211,15 +211,15 @@ export default {
       };
       axios
         .request({
-          url: "/api/v1/web/click/replylike",
+          url: '/api/v1/web/click/replylike',
           data: {
             params
           },
-          method: "post"
+          method: 'post'
         })
         .then(res => {
           if (res.code === 0) {
-            this.$emit("getArticleDetail");
+            this.$emit('getArticleDetail');
           }
         });
     },
@@ -235,14 +235,14 @@ export default {
         });
         if (statuss) {
           Message.warning({
-            message: "您已点过赞！！"
+            message: '您已点过赞！！'
           });
           return;
         }
       }
       let decoded = null;
-      if (sessionStorage.getItem("token")) {
-        decoded = jwtToken(sessionStorage.getItem("token"));
+      if (sessionStorage.getItem('token')) {
+        decoded = jwtToken(sessionStorage.getItem('token'));
       }
       let params = {
         user_id: decoded.id,
@@ -251,18 +251,18 @@ export default {
       };
       axios
         .request({
-          url: "/api/v1/web/click/child/replylike",
+          url: '/api/v1/web/click/child/replylike',
           data: {
             params
           },
-          method: "post"
+          method: 'post'
         })
         .then(async res => {
           if (res.code == 0) {
             Message.warning({
               message: res.msg
             });
-            await this.$emit("getArticleDetail");
+            await this.$emit('getArticleDetail');
           } else {
             Message.warning({
               message: res.msg
@@ -278,10 +278,10 @@ export default {
           article_id: this.$route.query.id,
           displayName: this.displayName
         };
-        await this.$emit("send", params);
-        this.$refs.editor.innerHTML = "";
+        await this.$emit('send', params);
+        this.$refs.editor.innerHTML = '';
       } else {
-        alert("请先登录");
+        alert('请先登录');
         return;
       }
     },
@@ -294,7 +294,7 @@ export default {
       this.answerId = id;
       this.answerDiaplayName = displayName;
       if (this.displayName === displayName) {
-        alert("不能@自己");
+        alert('不能@自己');
         return;
       }
       let item = this.comments.find(item => item.id === id);
@@ -302,7 +302,7 @@ export default {
       this.answerMsg = `@${displayName}  `;
       if (!this.isLogin) {
         item.toggleAnswer = true;
-        alert("请先登录");
+        alert('请先登录');
       }
       item.toggleAnswer = !item.toggleAnswer;
     },
@@ -319,7 +319,7 @@ export default {
         if (res.code == 0) {
           this.answer(this.answerId, this.answerDiaplayName);
           let item = this.comments.find(item => item.id === this.answerId);
-          this.$emit("getArticleDetail");
+          this.$emit('getArticleDetail');
         }
       });
     }
