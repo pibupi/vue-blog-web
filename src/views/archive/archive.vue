@@ -6,7 +6,7 @@
         :key="index"
         :color="item.color"
       >
-        <span class="time"> {{ item.createdAt.split(" ")[0] }}</span>
+        <span class="time"> {{ item.createdAt.split(' ')[0] }}</span>
         <span class="title" @click="toArticleDetail(item.id)">{{
           item.title
         }}</span>
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
     };
   },
   created() {
-    this.$store.commit("CHANGE_CURRENT", 1);
+    this.$store.commit('CHANGE_CURRENT', 1);
     let data = {
       ...this.pagination,
       displayName: this.displayName
@@ -43,7 +43,7 @@ export default {
     this.getArticleListAction(data);
   },
   computed: {
-    ...mapGetters(["articleList"]),
+    ...mapGetters(['articleList']),
     ...mapState({
       count: state => state.article.count,
       pagination: state => state.article.pagination,
@@ -51,7 +51,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getArticleListAction"]),
+    ...mapActions(['getArticleListAction']),
     handleCurrentChange(val) {
       this.pagination.current = val;
       let data = {
@@ -61,7 +61,7 @@ export default {
       this.getArticleListAction(data);
     },
     toArticleDetail(id) {
-      this.$router.push({ name: "articleDetail", query: { id } });
+      this.$router.push({ name: 'articleDetail', query: { id } });
     }
   }
 };

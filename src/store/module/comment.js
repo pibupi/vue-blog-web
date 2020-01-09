@@ -1,4 +1,4 @@
-import { sendComment } from "@/service/comment.js";
+import { sendComment } from '@/service/comment.js';
 const state = {
   comments: []
 };

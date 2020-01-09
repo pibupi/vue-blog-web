@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import Header from "@/components/header/header.vue";
+import Header from '@/components/header/header.vue';
 export default {
-  name: "layout",
+  name: 'layout',
   components: {
     Header
   }

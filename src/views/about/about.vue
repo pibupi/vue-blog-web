@@ -69,10 +69,10 @@
 </template>
 <script>
 export default {
-  name: "about-me",
+  name: 'about-me',
   methods: {
     toGitHub() {
-      window.location.href = "https://github.com/zhanghe888/react-blog-admin";
+      window.location.href = 'https://github.com/zhanghe888/react-blog-admin';
     }
   }
 };

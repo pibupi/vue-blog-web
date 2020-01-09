@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-import Comment from "@/components/comments/comments";
+import Comment from '@/components/comments/comments';
 export default {
-  name: "wall",
+  name: 'wall',
   components: {
     Comment
   }

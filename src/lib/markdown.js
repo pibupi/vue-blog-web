@@ -1,6 +1,6 @@
-import marked from "marked";
-import xss from "xss";
-import hljs from "highlight.js";
+import marked from 'marked';
+import xss from 'xss';
+import hljs from 'highlight.js';
 export const translateMarkdown = (plainText, isGuardXss = false) => {
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: new marked.Renderer(),

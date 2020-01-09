@@ -1,18 +1,18 @@
-import { getArticleList, getCategoryArticle } from "@/service/article.js";
+import { getArticleList, getCategoryArticle } from '@/service/article.js';
 
 const state = {
   articleList: [],
   pagination: {
     current: 1,
     pageSize: 5,
-    keywords: ""
+    keywords: ''
   },
   count: null
 };
 const getters = {
   articleList: state => {
     state.articleList.forEach(item => {
-      item.color = "#1890ff";
+      item.color = '#1890ff';
     });
     return state.articleList;
   }
@@ -40,7 +40,7 @@ const actions = {
         data: { articleList, count }
       } = await getArticleList(params);
       if (code === 0) {
-        commit("GET_ARTICLE_LIST", { articleList, count });
+        commit('GET_ARTICLE_LIST', { articleList, count });
       }
     } catch (err) {
       // console.log(err);
@@ -50,14 +50,14 @@ const actions = {
     try {
       const { code, data } = await getCategoryArticle(category_id);
       if (code === 0) {
-        commit("GET_CATEGORY_ARTICLE", data);
+        commit('GET_CATEGORY_ARTICLE', data);
       }
     } catch (err) {
       // console.log(err);
     }
   },
   clearArticleListAction({ commit }) {
-    commit("CLEAR_ARTICLE_LIST");
+    commit('CLEAR_ARTICLE_LIST');
   }
 };
 export default {

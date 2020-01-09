@@ -1,4 +1,4 @@
-import { getCategory } from "@/service/category.js";
+import { getCategory } from '@/service/category.js';
 const state = {
   category: []
 };
@@ -13,7 +13,7 @@ const actions = {
     try {
       const { code, data } = await getCategory();
       if (code === 0) {
-        commit("GET_CATEGORY", data);
+        commit('GET_CATEGORY', data);
       }
     } catch (err) {
       // console.log(err);

@@ -7,9 +7,9 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex';
 export default {
-  name: "single-article",
+  name: 'single-article',
   data() {
     return {
       article: {},
@@ -35,7 +35,7 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["getSingleArticleAction"])
+    ...mapActions(['getSingleArticleAction'])
   }
 };
 </script>

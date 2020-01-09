@@ -1,10 +1,10 @@
-.clearfix:after{ 
-  content: ".";              /* 这里尽量写点内容，否则在IE6-7会出现间隙 */
-  display: block;            /* 转换为块级元素 */
-  height: 0;                 /* 高度为0 */
-  clear: both;               /* 清除浮动 */
-  visibility: hidden;        /* 隐藏盒子 */
+.clearfix:after {
+  content: '.'; /* 这里尽量写点内容，否则在IE6-7会出现间隙 */
+  display: block; /* 转换为块级元素 */
+  height: 0; /* 高度为0 */
+  clear: both; /* 清除浮动 */
+  visibility: hidden; /* 隐藏盒子 */
 }
-.clearfix{
-  *zoom: 1;    /* 这是专门给IE6-7做的清除浮动 */
+.clearfix {
+  *zoom: 1; /* 这是专门给IE6-7做的清除浮动 */
 }

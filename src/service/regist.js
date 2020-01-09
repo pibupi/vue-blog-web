@@ -1,15 +1,15 @@
-import axios from "./index";
+import axios from './index';
 export const register = userInfo => {
   return axios.request({
-    url: "/api/v1/admin/user/register",
+    url: '/api/v1/admin/user/register',
     data: userInfo,
-    method: "post"
+    method: 'post'
   });
 };
 export const login = userInfo => {
   return axios.request({
-    url: "/api/v1/admin/user/login",
+    url: '/api/v1/admin/user/login',
     data: userInfo,
-    method: "post"
+    method: 'post'
   });
 };
