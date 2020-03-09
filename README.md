@@ -44,7 +44,7 @@ npm run serve
 ```
 ### 项目结构
 ```
-react-blog-admin
+vue-blog-web
 ├─ .gitignore          // git忽略文件
 ├─ src
 │    ├─ assets         // 静态资源
