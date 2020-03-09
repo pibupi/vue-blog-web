@@ -1,24 +1,61 @@
-# vue-blog-web
+### 项目介绍
+* vue-blog-web为博客前台
+* 前后端分离项目
 
-## Project setup
+### 技术栈
+* Vue全家桶
+* Axios
+* Sass
+* ElementUI
+* Eslint + Prettier
+* highlight.js
+### 预览
+
+### 已实现功能
+
+- [x] 登录
+- [x] github第三方授权
+- [x] 文章列表展示
+- [x] 文章详情展示
+- [x] 标签展示
+- [x] 评论功能
+- [x] 代码高亮
+
+### 待实现功能
+
+- [ ] 文章段落生成锚点
+- [ ] 推荐文章
+- [ ] 个人中心完善
+- [ ] UI
+
+### 项目启动
 ```
-yarn install
+git clone git@github.com:zhanghe888/vue-blog-web.git
+
+cd vue-blog-web
+
+npm install
+
+npm run serve
+```
+### 项目结构
+```
+react-blog-admin
+├─ .gitignore          // git忽略文件
+├─ src
+│    ├─ assets         // 静态资源
+│    ├─ components     // 公共组件
+│    ├─ config         // 配置文件
+│    ├─ lib            // 公共方法
+│    ├─ router         // 路由表
+│    ├─ service        // 请求层
+│    └─ store          // 状态共享
+│    └─ views          // 业务模块
+└─ babel.config.js    // babel配置，Element按需加载
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 未来
+* 采用webpack4+，手动配置工程环境
+* TypeScript重构此项目
+* 优化前台UI展示
+* 增加vue3.0新特性
