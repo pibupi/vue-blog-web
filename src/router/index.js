@@ -17,14 +17,14 @@ const routes = [
     meta: { index: 0 },
     redirect: '/home',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/layout/layout.vue'),
+      import(/* webpackChunkName: "layout" */ '../views/layout/layout.vue'),
     children: [
       {
         path: 'home',
         name: 'home',
         meta: { index: 1 }, //meta对象的index用来定义当前路由的层级,由小到大,由低到高
         component: () =>
-          import(/* webpackChunkName: "about" */ '../views/home/home.vue')
+          import(/* webpackChunkName: "home" */ '../views/home/home.vue')
       },
       {
         path: 'category',
@@ -32,7 +32,7 @@ const routes = [
         meta: { index: 1 },
         component: () =>
           import(
-            /* webpackChunkName: "about" */ '../views/category/category.vue'
+            /* webpackChunkName: "category" */ '../views/category/category.vue'
           )
       },
       {
@@ -48,7 +48,7 @@ const routes = [
         meta: { index: 1 },
         component: () =>
           import(
-            /* webpackChunkName: "about" */ '../views/article-detail/article-detail.vue'
+            /* webpackChunkName: "articleDetail" */ '../views/article-detail/article-detail.vue'
           )
       },
       {
@@ -56,14 +56,16 @@ const routes = [
         name: 'wall',
         meta: { index: 1 },
         component: () =>
-          import(/* webpackChunkName: "about" */ '../views/wall/wall.vue')
+          import(/* webpackChunkName: "wall" */ '../views/wall/wall.vue')
       },
       {
         path: 'archive',
         name: 'archive',
         meta: { index: 1 },
         component: () =>
-          import(/* webpackChunkName: "about" */ '../views/archive/archive.vue')
+          import(
+            /* webpackChunkName: "archive" */ '../views/archive/archive.vue'
+          )
       }
     ]
   }
