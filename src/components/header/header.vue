@@ -116,6 +116,7 @@
             prop="password"
           >
             <el-input
+              type="password"
               class="regis-form"
               v-model="registForm.password"
               autocomplete="off"
@@ -128,6 +129,7 @@
             prop="password2"
           >
             <el-input
+              type="password"
               class="regis-form"
               v-model="registForm.password2"
               autocomplete="off"
