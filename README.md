@@ -59,7 +59,7 @@ vue-blog-web
 ```
 
 ### 未来
-* 采用webpack4+，手动配置工程环境
+* 采用webpack4+动配置工程环境
 * TypeScript重构此项目
 * 优化前台UI展示
 * 增加vue3.0新特性
